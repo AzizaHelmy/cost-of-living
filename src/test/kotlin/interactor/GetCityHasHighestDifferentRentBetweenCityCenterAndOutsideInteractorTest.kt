@@ -1,6 +1,6 @@
 package interactor
 
-import model.FakeData
+import interactor.fakeData.FakeData
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -12,7 +12,7 @@ internal class GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteract
 
 
     lateinit var converter:GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteractor
-    lateinit var fakedata:FakeData
+    lateinit var fakedata: FakeData
     @BeforeAll
     fun setUp(){
         fakedata= FakeData()
@@ -21,8 +21,8 @@ internal class GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteract
     }
     @Test
     fun should_ReturnCorrectCity_When_TypeOne() {
-        //given
-        val type=1
+        //given the type of the apartment
+        val type=TheTypeOfApartments.ONE_BED_ROOM
 
         //when find the city with the Highest different rent
         val city=converter.execute(type)
@@ -31,23 +31,14 @@ internal class GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteract
     }
     @Test
     fun should_ReturnCorrectCity_When_TypeTwo() {
-        //given
-        val type=2
+        //given the type of the apartment
+        val type=TheTypeOfApartments.THREE_BED_ROOMS
 
         //when find the city with the Highest different rent
         val city=converter.execute(type)
         //then
         assertEquals("Solue",city)
     }
-    @Test
-    fun should_ReturnNull_When_TypeNotCorrect() {
-        //given
-        val type=3
 
-        //when find the city with the Highest different rent
-        val city=converter.execute(type)
-        //then
-        assertNull(city)
-    }
 
 }
