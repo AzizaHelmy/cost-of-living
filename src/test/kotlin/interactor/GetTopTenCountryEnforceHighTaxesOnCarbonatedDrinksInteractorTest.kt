@@ -25,17 +25,23 @@ class GetTopTenCountryEnforceHighTaxesOnCarbonatedDrinksInteractorTest {
 
     @Test
     fun returnSizeOfList() {
+        //given
         val limit = 10
         val cities = dataSource.getAllCitiesData()
+        //when
         val result = testingData.execute(limit, cities)
+        //then
         assertEquals(10, result.size)
     }
 
 
     @Test
     fun throwNullException() {
+        //given
         lateinit var list : List<CityEntity>
+        //when
         val noData = org.junit.jupiter.api.function.Executable { testingData.execute(10, list) }
+        //then
         assertThrows(Exception::class.java , noData)
     }
 
