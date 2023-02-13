@@ -1,4 +1,4 @@
-package interactor.fakeData
+package fakeData
 
 import interactor.CostOfLivingDataSource
 import model.*
