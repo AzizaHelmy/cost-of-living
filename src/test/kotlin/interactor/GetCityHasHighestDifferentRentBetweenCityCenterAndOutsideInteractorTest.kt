@@ -27,7 +27,7 @@ internal class GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteract
         //when find the city with the Highest different rent
         val city=converter.execute(type)
         //then
-        assertEquals("Masin",city)
+        assertEquals(fakedata.getAllCitiesData()[1],city)
     }
     @Test
     fun should_ReturnCorrectCity_When_TypeTwo() {
@@ -37,7 +37,7 @@ internal class GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteract
         //when find the city with the Highest different rent
         val city=converter.execute(type)
         //then
-        assertEquals("Solue",city)
+        assertEquals(fakedata.getAllCitiesData()[4],city)
     }
 
 
