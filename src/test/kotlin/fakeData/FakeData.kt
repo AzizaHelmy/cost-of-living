@@ -913,5 +913,18 @@ class FakeData : CostOfLivingDataSource {
                 RealEstatesPrices(null, null, null, null, null, null),
                 averageMonthlyNetSalaryAfterTax, true
             )
+        fun createCity(averageMonthlyNetSalaryAfterTax: Float, internetPrice: Float?) =
+            CityEntity(
+                "Egypt", "Country", MealsPrices(null, null, null),
+                DrinksPrices(null, null, null, null, null),
+                FruitAndVegetablesPrices(null, null, null, null, null, null, null),
+                FoodPrices(null, null, null, null, null, null),
+                ServicesPrices(null, null, internetPrice, null, null, null, null, null),
+                ClothesPrices(null, null, null, null),
+                TransportationsPrices(null, null, null, null, null, null),
+                CarsPrices(null, null),
+                RealEstatesPrices(null, null, null, null, null, null),
+                averageMonthlyNetSalaryAfterTax, true
+            )
     }
 }
