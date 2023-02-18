@@ -16,10 +16,9 @@ class GetCityHasLowestYearsToBuyApartmentInteractor(
             .map { Pair(it.cityName, getNumberOfYearsToBuyApartment(it)) }
     }
 
-    fun excludeNullSalariesAndNullPricePerSquareApartmentAndLowQualityData
-                (city: CityEntity): Boolean {
-        return city.realEstatesPrices.pricePerSquareMeterToBuyApartmentOutsideOfCentre != null&& city.dataQuality
-                &&city.averageMonthlyNetSalaryAfterTax!=null
+    fun excludeNullSalariesAndNullPricePerSquareApartmentAndLowQualityData(city: CityEntity): Boolean {
+        return city.run { realEstatesPrices.pricePerSquareMeterToBuyApartmentOutsideOfCentre != null&& city.dataQuality
+                &&city.averageMonthlyNetSalaryAfterTax!=null }
     }
 
     fun getNumberOfYearsToBuyApartment( city: CityEntity): Float {
