@@ -77,6 +77,10 @@ fun main() {
     println(getSuitableCityMoreSavingPerMonth.execute())
     printSeparationLine()
     //endregion
+    val getCityHasCheapestDressPriceInteractor = GetCityHasCheapestDressPriceInteractor(dataSource)
+    println(getCityHasCheapestDressPriceInteractor.execute(3,"Egypt"))
+    printSeparationLine()
+    //endregion
 }
 
 private fun printSeparationLine() {
