@@ -19,7 +19,7 @@ class GetCityHasMostSuitableFitnessClubInteractor(private val dataSource: CostOf
     }
 
     fun getLowestPriceOfTransportationOfOneWayTicket(city: CityEntity): Float? {
-        TODO("NOT IMPLEMENTED YET")
+        return city.transportationsPrices.oneWayTicketLocalTransport
     }
 }
 
