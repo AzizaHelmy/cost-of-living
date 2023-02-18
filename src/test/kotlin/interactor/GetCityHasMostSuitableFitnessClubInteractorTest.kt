@@ -2,6 +2,7 @@ package interactor
 
 import io.mockk.*
 import mockData.MockCityEntity.createMockCity
+import model.CityEntity
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -50,5 +51,21 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         val cityResult = classUnderTest.excludeLowQualityData(mockCity)
         //then
         assertFalse(cityResult)
+    }
+
+    @Test
+    fun `should return true when the city is in USA`() {
+        // given mock city entity data and the expected value
+        val mockCity = createMockCity(
+            "United Kingdom",
+            "London",
+            15.0F,
+            false
+        )
+        // when return the country of the city is USA
+        every { mockData.getAllCitiesData() } returns listOf(mockCity)
+        val result = classUnderTest.isCitiesInUnitedKingdomGermanyAndFrance(mockCity)
+        // then
+        assertTrue(result)
     }
 }
