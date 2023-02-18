@@ -138,4 +138,21 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         //then
         assertEquals(mockCity.transportationsPrices.oneWayTicketLocalTransport, cityResult)
     }
+
+    @Test
+    fun `should return null when the city hasn't one way ticket`() {
+        // given mock city entity data and the expected value
+        val mockCity = createMockCity(
+            "United Kingdom",
+            "London",
+            300.0F,
+            null,
+            true
+        )
+        every { mockData.getAllCitiesData() } returns listOf(mockCity)
+        //when check if the data quality is true
+        val cityResult = classUnderTest.getLowestPriceOfTransportationOfOneWayTicket(mockCity)
+        //then
+        assertEquals(mockCity.transportationsPrices.oneWayTicketLocalTransport, cityResult)
+    }
 }
