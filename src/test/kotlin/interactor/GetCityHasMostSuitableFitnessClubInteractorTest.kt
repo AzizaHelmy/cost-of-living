@@ -35,4 +35,20 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         //then
         assertTrue(cityResult)
     }
+
+    @Test
+    fun `should return false when the data quality is low`() {
+        // given mock city entity data and the expected value
+        val mockCity = createMockCity(
+            "United Kingdom",
+            "London",
+            15.0F,
+            false
+        )
+        every { mockData.getAllCitiesData() } returns listOf(mockCity)
+        //when check if the data quality is true
+        val cityResult = classUnderTest.excludeLowQualityData(mockCity)
+        //then
+        assertFalse(cityResult)
+    }
 }
