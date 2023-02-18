@@ -9,6 +9,6 @@ class GetCityHasMostSuitableFitnessClubInteractor(private val dataSource: CostOf
     }
 
     fun excludeLowQualityData(city: CityEntity): Boolean {
-        TODO("NOT IMPLEMENTED YET")
+        return city.dataQuality
     }
 }
