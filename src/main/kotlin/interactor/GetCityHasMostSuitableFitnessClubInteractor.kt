@@ -13,13 +13,14 @@ class GetCityHasMostSuitableFitnessClubInteractor(private val dataSource: CostOf
     }
 
     fun isCitiesInUnitedKingdomGermanyAndFrance(city: CityEntity): Boolean {
-        TODO("NOT IMPLEMENTED YET")
+        return city.country == SpecificCountries.UNITED_KINGDOM.nameOfCountry
+                || city.country == SpecificCountries.GERMANY.nameOfCountry
+                || city.country == SpecificCountries.FRANCE.nameOfCountry
     }
 }
 
 enum class SpecificCountries(val nameOfCountry: String) {
     UNITED_KINGDOM("United Kingdom"),
     GERMANY("Germany"),
-    FRANCE("France"),
-    SPAIN("Spain")
+    FRANCE("France")
 }
