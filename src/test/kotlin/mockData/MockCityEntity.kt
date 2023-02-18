@@ -628,8 +628,8 @@ object MockCityEntity {
     // Start region for GetTopTenCountryEnforceHighTaxesOnCarbonatedDrinksInteractor (Problem 9)
     fun createMockCity(
         countryName: String,
-        cocaPepsiPrice: Float,
         dataQuality: Boolean,
+        cocaPepsiPrice: Float?
     ): CityEntity {
         return CityEntity(
             "Honey City",
