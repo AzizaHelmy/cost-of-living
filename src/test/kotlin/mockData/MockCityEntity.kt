@@ -773,4 +773,85 @@ object MockCityEntity {
 
     }
     // endregion for GetSuitableCityMoreSavingPerMonthInteractor (Problem 10)
+
+    // region for GetCityHasLowestYearsToBuyApartmentInteractor (Problem 13)
+    fun createMockCity(
+      countryName:  String,   cityName:  String,
+      dataQuality: Boolean,
+        oneSummerDressInAChainStoreZaraHAndM: Float?
+    ): CityEntity {
+        return CityEntity(
+            cityName,
+            countryName,
+            MealsPrices(
+                null,
+                null,
+                null
+            ),
+            DrinksPrices(
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            FruitAndVegetablesPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            FoodPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            ServicesPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            ClothesPrices(
+                null,
+                oneSummerDressInAChainStoreZaraHAndM,
+                null,
+                null
+            ),
+            TransportationsPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            CarsPrices(
+                null,
+                null
+            ),
+            RealEstatesPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+            ),
+            null,
+            dataQuality,
+        )
+
+    }
+    // endregion for GetCityHasLowestYearsToBuyApartmentInteractor (Problem 13)
 }
