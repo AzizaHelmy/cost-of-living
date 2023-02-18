@@ -45,9 +45,9 @@ class SearchCheapestCarInCountryInteractorTest {
                 ), 1500.0f
             )
         )
-        // When averageSalary not null and high dataQuality
+        // When averageSalary and cars prices not null
         every { mockData.getAllCitiesData() } returns (mockCity)
-        // Then return a list of pair of city name and average salary
+        // Then return a list of pair of city name and car price
         val actualResult = searchInteractor.execute(mockCity[0].country, 1)
         assertEquals(listOf(Pair("You can buy the car after working 9.333333 months in Los Angeles", 14000.0f)
             ), actualResult
@@ -67,9 +67,9 @@ class SearchCheapestCarInCountryInteractorTest {
                     ), 500.0f
                 )
             )
-            // When averageSalary not null and high dataQuality
+            // When averageSalary and cars prices not null
             every { mockData.getAllCitiesData() } returns (mockCity)
-            // Then return a list of pair of city name and average salary
+            // Then return a list of pair of city name and car price
             val actualResult = searchInteractor.searchCheapestCar(mockCity[0])
             assertEquals(10000.0f, actualResult)
         }
@@ -87,9 +87,9 @@ class SearchCheapestCarInCountryInteractorTest {
                     ), 2000.0f
                 )
             )
-            // When averageSalary not null and high dataQuality
+            // When both car prices are not null
             every { mockData.getAllCitiesData() } returns (mockCity)
-            // Then return a list of pair of city name and average salary
+            // Then return true
             val actualResult = searchInteractor.excludeNullCarsPricesAndSalaries(mockCity[0])
             assertTrue(actualResult)
         }
@@ -107,9 +107,9 @@ class SearchCheapestCarInCountryInteractorTest {
                     ),400.0f
                 )
             )
-            // When averageSalary not null and high dataQuality
+            // When the price of a Volkswagen Golf is null
             every { mockData.getAllCitiesData() } returns (mockCity)
-            // Then return a list of pair of city name and average salary
+            // Then return false
             val actualResult = searchInteractor.excludeNullCarsPricesAndSalaries(mockCity[0])
             assertFalse(actualResult)
         }
@@ -127,16 +127,16 @@ class SearchCheapestCarInCountryInteractorTest {
                     ),350.0f
                 )
             )
-            // When averageSalary not null and high dataQuality
+            // When the price of a Toyota Corolla is null
             every { mockData.getAllCitiesData() } returns (mockCity)
-            // Then return a list of pair of city name and average salary
+            // Then return false
             val actualResult = searchInteractor.excludeNullCarsPricesAndSalaries(mockCity[0])
             assertFalse(actualResult)
         }
 
         @Test
         fun `should return false when both car prices are null`() {
-            // Given country name Uppercase
+            // Given correct country name
             val mockCity = listOf(
                 MockCityEntity.createMockCity(
                     "Netherlands",
@@ -148,9 +148,9 @@ class SearchCheapestCarInCountryInteractorTest {
                     ),1100.0f
                 )
             )
-            // When averageSalary not null and high dataQuality
+            // When both car prices are null
             every { mockData.getAllCitiesData() } returns (mockCity)
-            // Then return a list of pair of city name and average salary
+            // Then return false
             val actualResult = searchInteractor.excludeNullCarsPricesAndSalaries(mockCity[0])
             assertFalse(actualResult)
         }
