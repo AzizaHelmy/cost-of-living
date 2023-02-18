@@ -17,14 +17,14 @@ import kotlin.test.assertTrue
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GetCityHasAverageMealPricesInteractorTest {
 
-    private lateinit var sut: GetCityHasAverageMealPricesInteractor
+    private lateinit var interactor: GetCityHasAverageMealPricesInteractor
     private var mockData = mockk<CostOfLivingDataSource>()
 
     @BeforeAll
     fun setUp() {
         clearAllMocks()
         unmockkAll()
-        sut = GetCityHasAverageMealPricesInteractor(mockData)
+        interactor = GetCityHasAverageMealPricesInteractor(mockData)
     }
 
     @Test
@@ -33,7 +33,7 @@ class GetCityHasAverageMealPricesInteractorTest {
         val city: CityEntity = mockk()
         // when return the country of the city is USA
         every { city.country } returns ThreeSpecificCountries.USA.nameOFCountry
-        val result = sut.isCitiesInUSACanadaAndMexico(city)
+        val result = interactor.isCitiesInUSACanadaAndMexico(city)
         // then
         assertTrue(result)
     }
@@ -44,7 +44,7 @@ class GetCityHasAverageMealPricesInteractorTest {
         val city: CityEntity = mockk()
         // when return the country of the city is Canada
         every { city.country } returns ThreeSpecificCountries.CANADA.nameOFCountry
-        val result = sut.isCitiesInUSACanadaAndMexico(city)
+        val result = interactor.isCitiesInUSACanadaAndMexico(city)
         // then
         assertTrue(result)
     }
@@ -55,7 +55,7 @@ class GetCityHasAverageMealPricesInteractorTest {
         val city: CityEntity = mockk()
         // when return the country of the city is Mexico
         every { city.country } returns ThreeSpecificCountries.MEXICO.nameOFCountry
-        val result = sut.isCitiesInUSACanadaAndMexico(city)
+        val result = interactor.isCitiesInUSACanadaAndMexico(city)
         // then
         assertTrue(result)
     }
@@ -66,7 +66,7 @@ class GetCityHasAverageMealPricesInteractorTest {
         val city: CityEntity = mockk()
         // when return the country of the city is Egypt
         every { city.country } returns ThreeSpecificCountries.EGYPT.nameOFCountry
-        val result = sut.isCitiesInUSACanadaAndMexico(city)
+        val result = interactor.isCitiesInUSACanadaAndMexico(city)
         // then
         assertFalse(result)
     }
@@ -79,7 +79,7 @@ class GetCityHasAverageMealPricesInteractorTest {
         every { city.mealsPrices.mealInexpensiveRestaurant } returns null
         every { city.mealsPrices.mealAtMcDonaldSOrEquivalent } returns 4.0F
         // when check if city has average meal
-        val result = sut.excludeNullMealPrices(city)
+        val result = interactor.excludeNullMealPrices(city)
         // then
         assertEquals(false, result)
     }
@@ -92,7 +92,7 @@ class GetCityHasAverageMealPricesInteractorTest {
         every { city.mealsPrices.mealInexpensiveRestaurant } returns 4.0F
         every { city.mealsPrices.mealAtMcDonaldSOrEquivalent } returns null
         // when check if city has average meal
-        val result = sut.excludeNullMealPrices(city)
+        val result = interactor.excludeNullMealPrices(city)
         // then
         assertEquals(false, result)
     }
@@ -106,7 +106,7 @@ class GetCityHasAverageMealPricesInteractorTest {
         every { city.mealsPrices.mealAtMcDonaldSOrEquivalent } returns 2.0F
 
         // when check if city has average meal
-        val result = sut.excludeNullMealPrices(city)
+        val result = interactor.excludeNullMealPrices(city)
         // then
         assertEquals(true, result)
     }
@@ -120,7 +120,7 @@ class GetCityHasAverageMealPricesInteractorTest {
         every { city.mealsPrices.mealAtMcDonaldSOrEquivalent } returns 2.0F
 
         // when check if city has average meal
-        val result = sut.excludeNullMealPrices(city)
+        val result = interactor.excludeNullMealPrices(city)
         // then
         assertEquals(true, result)
     }
@@ -148,7 +148,7 @@ class GetCityHasAverageMealPricesInteractorTest {
         val mockCity3 = createMockCity("Canada", "Canada", mealPrices3)
         every { mockData.getAllCitiesData() } returns listOf(mockCity, mockCity2, mockCity3)
         // when list is not empty
-        val cityResult = sut.execute()
+        val cityResult = interactor.execute()
         // then
         assertEquals(mockCity, cityResult)
     }
