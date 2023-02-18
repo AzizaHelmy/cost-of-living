@@ -8,24 +8,20 @@ class GetCityHasAverageMealPricesInteractor(
     private val dataSource: CostOfLivingDataSource
 ) {
 
-    fun execute(): CityEntity {
+    fun execute(): CityEntity? {
 
         val listOfCitiesEntity = dataSource.getAllCitiesData()
             .filter { isCitiesInUSACanadaAndMexico(it) && excludeNullMealPrices(it) }
-            .sortedByDescending { getAverageMealInCity(it) }
+            .sortedByDescending { it.mealsPrices.getAverageMealInCity(it) }
 
-        val averageMealPricesInAllCities = getAverageMealInAllCities(listOfCitiesEntity)
-
-        return if (listOfCitiesEntity.isEmpty()) throw Throwable("List of cities is empty")
-        else listOfCitiesEntity.first {
-            getAverageMealInCity(it) == averageMealPricesInAllCities
-                    || getAverageMealInCity(it) == ceil(averageMealPricesInAllCities)
-                    || getAverageMealInCity(it) == floor(averageMealPricesInAllCities)
-        }
+        return if (listOfCitiesEntity.isNotEmpty()) getAverageMealInAllCities(listOfCitiesEntity)
+        else throw Throwable("List of cities is empty")
     }
 
     fun isCitiesInUSACanadaAndMexico(city: CityEntity): Boolean {
-        return city.country == ThreeSpecificCountries.USA.nameOFCountry || city.country == ThreeSpecificCountries.CANADA.nameOFCountry || city.country == ThreeSpecificCountries.MEXICO.nameOFCountry
+        return city.country == ThreeSpecificCountries.USA.nameOFCountry
+                || city.country == ThreeSpecificCountries.CANADA.nameOFCountry
+                || city.country == ThreeSpecificCountries.MEXICO.nameOFCountry
     }
 
     fun excludeNullMealPrices(city: CityEntity): Boolean {
@@ -34,21 +30,23 @@ class GetCityHasAverageMealPricesInteractor(
                 && (city.mealsPrices.mealAtMcDonaldSOrEquivalent != null))
     }
 
-    fun getAverageMealInCity(city: CityEntity): Float? {
-        return if (city.mealsPrices.mealFor2PeopleMidRangeRestaurant != null) {
-            city.mealsPrices.mealFor2PeopleMidRangeRestaurant / 2
-        } else if ((city.mealsPrices.mealInexpensiveRestaurant != null)
-            && (city.mealsPrices.mealAtMcDonaldSOrEquivalent != null)
-        )
-            ((city.mealsPrices.mealInexpensiveRestaurant) + (city.mealsPrices.mealAtMcDonaldSOrEquivalent)) / 2
-        else null
-    }
+    fun getAverageMealInAllCities(cityEntityList: List<CityEntity>): CityEntity? {
+        if (cityEntityList.isEmpty()) return null
+        val averageMealPricesInAllCities =
+            (cityEntityList.first().mealsPrices.getAverageMealInCity(cityEntityList.first())!! +
+        cityEntityList.last().mealsPrices.getAverageMealInCity(cityEntityList.last())!!).div(2)
 
-    fun getAverageMealInAllCities(cityEntityList: List<CityEntity>): Float {
-        return (getAverageMealInCity(cityEntityList.last())!! + getAverageMealInCity(cityEntityList.first())!!).div(2)
+        return cityEntityList.first {
+            (it.mealsPrices.getAverageMealInCity(it) == averageMealPricesInAllCities)
+                    || (it.mealsPrices.getAverageMealInCity(it) == floor(averageMealPricesInAllCities))
+                    || (it.mealsPrices.getAverageMealInCity(it) == ceil(averageMealPricesInAllCities))
+        }
     }
 }
 
 enum class ThreeSpecificCountries(val nameOFCountry: String) {
-    USA("United States"), CANADA("Canada"), MEXICO("Mexico"), EGYPT("Egypt")
+    USA("United States"),
+    CANADA("Canada"),
+    MEXICO("Mexico"),
+    EGYPT("Egypt")
 }
