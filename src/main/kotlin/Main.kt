@@ -50,8 +50,6 @@ fun main() {
     // region 6-CityHasLowestYearsToBuyApartment
     val getCityHasLowestYearsToBuyApartment = GetCityHasLowestYearsToBuyApartmentInteractor(dataSource)
     println(getCityHasLowestYearsToBuyApartment.execute(10))
-    println(getCityHasLowestYearsToBuyApartment.execute(7))
-    println(getCityHasLowestYearsToBuyApartment.execute(0))
     printSeparationLine()
     //endregion
     //region 7-CheapestBananaCitiesNames
