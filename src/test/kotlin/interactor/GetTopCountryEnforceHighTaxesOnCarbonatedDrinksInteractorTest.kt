@@ -34,14 +34,14 @@ class GetTopCountryEnforceHighTaxesOnCarbonatedDrinksInteractorTest {
         //Given eight countries as a limit and set mockk data
         val limit = 8
         val mockCountry = listOf(
-            createMockCity("Cuba", 2.0f, true),
-            createMockCity("Egypt", 2.0f, true),
-            createMockCity("Koura", 2.0f, true),
-            createMockCity("Lebanon", 2.0f, true),
-            createMockCity("Argentina", 2.0f, true),
-            createMockCity("Loliput", 2.0f, true),
-            createMockCity("Albania", 2.0f, true),
-            createMockCity("Syria", 0.82f, true)
+            createMockCity("Cuba", true, 2.0f),
+            createMockCity("Egypt", true, 2.0f),
+            createMockCity("Koura", true, 2.0f),
+            createMockCity("Lebanon", true, 2.0f),
+            createMockCity("Argentina", true, 2.0f),
+            createMockCity("Loliput", true, 2.0f),
+            createMockCity("Albania", true, 2.0f),
+            createMockCity("Syria", true, .82f)
         )
 
         every { dataSource.getAllCitiesData() } returns mockCountry
@@ -70,19 +70,20 @@ class GetTopCountryEnforceHighTaxesOnCarbonatedDrinksInteractorTest {
         // Then should Throw Exception
         assertThrows(Exception::class.java, noData)
     }
+
     @Test
     fun `should return correct data list when has limit with correct data and null data`() {
         //Given four countries as a limit and set mockk data
         val limit = 4
         val mockCountry = listOf(
-            createMockCity("Cuba", 0f, true),
-            createMockCity("Egypt", 2.0f, true),
-            createMockCity("Koura", 3.0f, true),
-            createMockCity("Lebanon", 1.0f, true),
-            createMockCity("Argentina", 0f, true),
-            createMockCity("Loliput", 0.5f, true),
-            createMockCity("Albania", 0f, true),
-            createMockCity("Syria", 4.4f, true)
+            createMockCity("Cuba",true, 3.0f),
+            createMockCity("Egypt", true, 2.0f),
+            createMockCity("Koura", true, 3.0f),
+            createMockCity("Lebanon", true, 1.0f),
+            createMockCity("Argentina",true, .02f),
+            createMockCity("Loliput", true, .02f),
+            createMockCity("Albania",true, .02f),
+            createMockCity("Syria", true,  4.4f)
         )
 
         every { dataSource.getAllCitiesData() } returns mockCountry
@@ -91,9 +92,9 @@ class GetTopCountryEnforceHighTaxesOnCarbonatedDrinksInteractorTest {
         // Then return listOf Pair(country name and the average prices for those drinks for this country)
         val expectedList = listOf(
             Pair("Syria", 4.4f),
+            Pair("Cuba", 3.0f),
             Pair("Koura", 3.0f),
-            Pair("Egypt", 2.0f),
-            Pair("Lebanon", 1.0f)
+            Pair("Egypt", 2.0f)
         )
         assertEquals(expectedList, actualList)
     }
@@ -104,14 +105,14 @@ class GetTopCountryEnforceHighTaxesOnCarbonatedDrinksInteractorTest {
         //Given eight countries as a limit and set mockk data
         val limit = 8
         val mockCountry = listOf(
-            createMockCity("Cuba", 3.0f, false),
-            createMockCity("Egypt", 2.0f, false),
-            createMockCity("Koura", 7.0f, false),
-            createMockCity("Lebanon", 3.50f, false),
-            createMockCity("Argentina", 2.0f, false),
-            createMockCity("Loliput", 5.0f, false),
-            createMockCity("Albania", 6.0f, false),
-            createMockCity("Syria", 0.82f, false)
+            createMockCity("Cuba", false, 3.0f),
+            createMockCity("Egypt", false, 2.0f),
+            createMockCity("Koura", false, 7.0f),
+            createMockCity("Lebanon", false, 3.50f),
+            createMockCity("Argentina", false, 2.0f),
+            createMockCity("Loliput", false, 5.0f),
+            createMockCity("Albania", false, 6.0f),
+            createMockCity("Syria", false, 0.82f)
         )
 
         every { dataSource.getAllCitiesData() } returns mockCountry
