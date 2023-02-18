@@ -773,4 +773,87 @@ object MockCityEntity {
 
     }
     // End region for GetSuitableCityMoreSavingPerMonthInteractor (Problem 10)
+
+    // region GetCityHasMostSuitableFitnessClubInteractor
+    fun createMockCity(
+        countryName: String,
+        cityName: String,
+        fitnessClubMonthlyFeeForOneAdult: Float?,
+        oneWayTicketLocalTransport: Float?,
+        dataQuality: Boolean
+    ): CityEntity {
+        return CityEntity(
+            cityName,
+            countryName,
+            MealsPrices(
+                null,
+                null,
+                null
+            ),
+            DrinksPrices(
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            FruitAndVegetablesPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            FoodPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            ServicesPrices(
+                null,
+                null,
+                null,
+                fitnessClubMonthlyFeeForOneAdult,
+                null,
+                null,
+                null,
+                null
+            ),
+            ClothesPrices(
+                null,
+                null,
+                null,
+                null
+            ),
+            TransportationsPrices(
+                oneWayTicketLocalTransport,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            CarsPrices(
+                null,
+                null
+            ),
+            RealEstatesPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            null,
+            dataQuality
+        )
+
+    }
+    // endregion GetCityHasMostSuitableFitnessClubInteractor
 }
