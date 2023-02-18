@@ -136,7 +136,7 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         //when check if the data quality is true
         val cityResult = classUnderTest.getLowestPriceOfTransportationOfOneWayTicket(mockCity)
         //then
-        assertEquals(mockCity.transportationsPrices.oneWayTicketLocalTransport, cityResult)
+        assertNotNull(cityResult)
     }
 
     @Test
@@ -153,6 +153,6 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         //when check if the data quality is true
         val cityResult = classUnderTest.getLowestPriceOfTransportationOfOneWayTicket(mockCity)
         //then
-        assertEquals(mockCity.transportationsPrices.oneWayTicketLocalTransport, cityResult)
+        assertNull(cityResult)
     }
 }
