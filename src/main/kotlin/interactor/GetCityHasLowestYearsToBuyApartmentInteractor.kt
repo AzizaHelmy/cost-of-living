@@ -10,20 +10,23 @@ class GetCityHasLowestYearsToBuyApartmentInteractor(
             .getAllCitiesData()
             .filter(::excludeNullSalariesAndNullPricePerSquareApartmentAndLowQualityData)
             .sortedBy { getNumberOfYearsToBuyApartment(it) }
-            .takeIf { (limit > 0) } ?: throw Exception("Not valid limit or full time salary "))
+            .takeIf { (limit > 0) } ?: throw Exception("Not valid limit or full time salary"))
             .take(limit)
             .map { Pair(it.cityName, getNumberOfYearsToBuyApartment(it)) }
     }
 
     fun excludeNullSalariesAndNullPricePerSquareApartmentAndLowQualityData(city: CityEntity): Boolean {
-        return city.realEstatesPrices.pricePerSquareMeterToBuyApartmentOutsideOfCentre != null
-                && city.dataQuality
-                && city.averageMonthlyNetSalaryAfterTax != null
+        return city.run {
+            realEstatesPrices.pricePerSquareMeterToBuyApartmentOutsideOfCentre != null && dataQuality
+                    && averageMonthlyNetSalaryAfterTax != null
+        }
     }
 
-    fun getNumberOfYearsToBuyApartment(city: CityEntity): Float {
-        return 100 * (city.realEstatesPrices.pricePerSquareMeterToBuyApartmentOutsideOfCentre!!) /
-                (city.averageMonthlyNetSalaryAfterTax!! * 12)
-
+    private fun getNumberOfYearsToBuyApartment(city: CityEntity): Float {
+        return city.run {
+            realEstatesPrices.pricePerSquareMeterToBuyApartmentOutsideOfCentre!!
+                .div(averageMonthlyNetSalaryAfterTax!! * 12) * 100
+        }
     }
+
 }
