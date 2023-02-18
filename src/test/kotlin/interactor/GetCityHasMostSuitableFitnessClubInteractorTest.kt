@@ -2,7 +2,6 @@ package interactor
 
 import io.mockk.*
 import mockData.MockCityEntity.createMockCity
-import model.CityEntity
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -27,6 +26,7 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         val mockCity = createMockCity(
             "United Kingdom",
             "London",
+            300.0F,
             15.0F,
             true
         )
@@ -42,8 +42,9 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         // given mock city entity data and the expected value
         val mockCity = createMockCity(
             "United Kingdom",
-            "London",
-            15.0F,
+            "Manchester",
+            200.0F,
+            10.0F,
             false
         )
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
@@ -59,6 +60,7 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         val mockCity = createMockCity(
             "United Kingdom",
             "London",
+            300.0F,
             15.0F,
             true
         )
@@ -75,7 +77,8 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         val mockCity = createMockCity(
             "Germany",
             "Berlin",
-            15.0F,
+            400.0F,
+            30.0F,
             true
         )
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
@@ -91,7 +94,8 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         val mockCity = createMockCity(
             "France",
             "Paris",
-            15.0F,
+            250.0F,
+            12.0F,
             true
         )
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
@@ -107,7 +111,8 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         val mockCity = createMockCity(
             "Spain",
             "Madrid",
-            15.0F,
+            160.0F,
+            35.0F,
             true
         )
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
