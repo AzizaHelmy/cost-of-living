@@ -16,3 +16,10 @@ class GetCityHasMostSuitableFitnessClubInteractor(private val dataSource: CostOf
         TODO("NOT IMPLEMENTED YET")
     }
 }
+
+enum class SpecificCountries(val nameOfCountry: String) {
+    UNITED_KINGDOM("United Kingdom"),
+    GERMANY("Germany"),
+    FRANCE("France"),
+    SPAIN("Spain")
+}
