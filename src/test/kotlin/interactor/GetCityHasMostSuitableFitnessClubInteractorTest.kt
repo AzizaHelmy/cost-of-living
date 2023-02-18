@@ -133,8 +133,8 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
             true
         )
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
-        //when check if the data quality is true
-        val cityResult = classUnderTest.getLowestPriceOfTransportationOfOneWayTicket(mockCity)
+        //when check if city has one way ticket
+        val cityResult = classUnderTest.isCityHasPriceOfTransportationOfOneWayTicket(mockCity)
         //then
         assertNotNull(cityResult)
     }
@@ -150,8 +150,42 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
             true
         )
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
-        //when check if the data quality is true
-        val cityResult = classUnderTest.getLowestPriceOfTransportationOfOneWayTicket(mockCity)
+        //when check if city has not one way ticket
+        val cityResult = classUnderTest.isCityHasPriceOfTransportationOfOneWayTicket(mockCity)
+        //then
+        assertNull(cityResult)
+    }
+
+    @Test
+    fun `should return value when the city has fitness club monthly fee for one adult`() {
+        // given mock city entity data and the expected value
+        val mockCity = createMockCity(
+            "United Kingdom",
+            "London",
+            300.0F,
+            15.0F,
+            true
+        )
+        every { mockData.getAllCitiesData() } returns listOf(mockCity)
+        //when check if the city has fitness club monthly fee for one adult
+        val cityResult = classUnderTest.isCityHasFitnessClubMonthlyFeeForOneAdult(mockCity)
+        //then
+        assertNotNull(cityResult)
+    }
+
+    @Test
+    fun `should return value when the city hasn't fitness club monthly fee for one adult`() {
+        // given mock city entity data and the expected value
+        val mockCity = createMockCity(
+            "United Kingdom",
+            "London",
+            null,
+            15.0F,
+            true
+        )
+        every { mockData.getAllCitiesData() } returns listOf(mockCity)
+        //when check if the city has no fitness club monthly fee for one adult
+        val cityResult = classUnderTest.isCityHasFitnessClubMonthlyFeeForOneAdult(mockCity)
         //then
         assertNull(cityResult)
     }
