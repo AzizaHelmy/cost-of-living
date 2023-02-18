@@ -54,7 +54,7 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
     }
 
     @Test
-    fun `should return true when the city is in USA`() {
+    fun `should return true when the city is in United Kingdom`() {
         // given mock city entity data and the expected value
         val mockCity = createMockCity(
             "United Kingdom",
@@ -62,8 +62,24 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
             15.0F,
             false
         )
-        // when return the country of the city is USA
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
+        // when return true if the country of the city is United Kingdom
+        val result = classUnderTest.isCitiesInUnitedKingdomGermanyAndFrance(mockCity)
+        // then
+        assertTrue(result)
+    }
+
+    @Test
+    fun `should return true when the city is in Germany`() {
+        // given mock city entity data and the expected value
+        val mockCity = createMockCity(
+            "Germany",
+            "Berlin",
+            15.0F,
+            false
+        )
+        every { mockData.getAllCitiesData() } returns listOf(mockCity)
+        // when return true if the country of the city is Germany
         val result = classUnderTest.isCitiesInUnitedKingdomGermanyAndFrance(mockCity)
         // then
         assertTrue(result)
