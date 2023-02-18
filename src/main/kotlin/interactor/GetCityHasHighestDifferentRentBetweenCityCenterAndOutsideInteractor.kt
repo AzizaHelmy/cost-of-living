@@ -15,7 +15,7 @@ class GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteractor(
                 abs(apartmentOneBedroomOutsideOfCentre!! - apartmentOneBedroomInCityCentre!!) +
                         abs(apartment3BedroomsInCityCentre!! - apartment3BedroomsOutsideOfCentre!!)
             }!!
-            }!!
+            }?:throw Exception("invalid Data")
 
 
 
