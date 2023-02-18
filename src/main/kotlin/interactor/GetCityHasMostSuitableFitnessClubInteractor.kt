@@ -17,6 +17,10 @@ class GetCityHasMostSuitableFitnessClubInteractor(private val dataSource: CostOf
                 || city.country == SpecificCountries.GERMANY.nameOfCountry
                 || city.country == SpecificCountries.FRANCE.nameOfCountry
     }
+
+    fun getLowestPriceOfTransportationOfOneWayTicket(city: CityEntity): Float? {
+        TODO("NOT IMPLEMENTED YET")
+    }
 }
 
 enum class SpecificCountries(val nameOfCountry: String) {
