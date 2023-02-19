@@ -16,19 +16,18 @@ import org.junit.jupiter.api.function.Executable
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteractorTest {
 
-    private lateinit var highestDifferentRent: GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteractor
-    private var mockkData = mockk<CostOfLivingDataSource>()
+    private lateinit var interactor: GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteractor
+    private val mockData = mockk<CostOfLivingDataSource>()
 
     @BeforeAll
     fun setUp() {
         clearAllMocks()
         unmockkAll()
-
-        highestDifferentRent = GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteractor(mockkData)
+        interactor = GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteractor(mockData)
     }
 
     @Test
-    fun `should ReturnCorrectCity When EnterListOfCityEntities`() {
+    fun `should return correct city when enter list of city entities`() {
         //given list of cityEntities
         val citiesData = listOf(
             createMockCity(
@@ -48,15 +47,15 @@ internal class GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteract
                 3.4f, 3.8f, true
             )
         )
+        every { mockData.getAllCitiesData() } returns citiesData
         //when find the city with the Highest different rent
-        every { mockkData.getAllCitiesData() } returns citiesData
-        val city = highestDifferentRent.execute()
+        val city = interactor.execute()
         //then
         assertEquals(citiesData[0], city)
     }
 
     @Test
-    fun `should Return excludeLowQualityData When EnterListOfCityEntities`() {
+    fun `should not return the correct city when low quality data`() {
         //given list of cityEntities
         val citiesData = listOf(
             createMockCity(
@@ -76,16 +75,15 @@ internal class GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteract
                 3.4f, 3.8f, true
             )
         )
-
+        every { mockData.getAllCitiesData() } returns citiesData
         //when find the city with the Highest different rent
-        every { mockkData.getAllCitiesData() } returns citiesData
-        val city = highestDifferentRent.execute()
+        val city = interactor.execute()
         //then
         assertEquals(citiesData[3], city)
     }
 
     @Test
-    fun `should throwException When all cities excluded`() {
+    fun `should throw exception when all cities excluded`() {
         //given list of cityEntities
         val citiesData = listOf(
             createMockCity(
@@ -97,15 +95,15 @@ internal class GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteract
                 null, null, false
             ),
         )
+        every { mockData.getAllCitiesData() } returns citiesData
         //when find the city with the Highest different rent
-        every { mockkData.getAllCitiesData() } returns citiesData
-        val city = Executable { highestDifferentRent.execute() }
-
+        val city = Executable { interactor.execute() }
         //then
         assertThrows(Exception::class.java, city)
     }
+
     @Test
-    fun `should throwException When all cities rent is null`() {
+    fun `should throw exception when all cities rent is null`() {
         //given list of cityEntities
         val citiesData = listOf(
             createMockCity(
@@ -117,22 +115,20 @@ internal class GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteract
                 null, null, true
             ),
         )
+        every { mockData.getAllCitiesData() } returns citiesData
         //when find the city with the Highest different rent
-        every { mockkData.getAllCitiesData() } returns citiesData
-        val city = Executable { highestDifferentRent.execute() }
-
+        val city = Executable { interactor.execute() }
         //then
         assertThrows(Exception::class.java, city)
     }
 
     @Test
-    fun `should throwException When the list of cities is empty`() {
+    fun `should throw exception when the list of cities is empty`() {
         //given an empty list of cityEntities
         val citiesData = emptyList<CityEntity>()
+        every { mockData.getAllCitiesData() } returns citiesData
         //when find the city with the Highest different rent
-        every { mockkData.getAllCitiesData() } returns citiesData
-        val city = Executable { highestDifferentRent.execute() }
-
+        val city = Executable { interactor.execute() }
         //then
         assertThrows(Exception::class.java, city)
     }

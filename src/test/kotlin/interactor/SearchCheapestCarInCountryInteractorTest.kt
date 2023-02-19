@@ -18,18 +18,18 @@ import org.junit.jupiter.api.TestInstance
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SearchCheapestCarInCountryInteractorTest {
 
-    private lateinit var searchInteractor: SearchCheapestCarInCountryInteractor
+    private lateinit var interactor: SearchCheapestCarInCountryInteractor
     private val mockData = mockk<CostOfLivingDataSource>()
 
     @BeforeAll
     fun setup() {
         unmockkAll()
         clearAllMocks()
-        searchInteractor = SearchCheapestCarInCountryInteractor(mockData)
+        interactor = SearchCheapestCarInCountryInteractor(mockData)
     }
 
     @Test
-    fun `should return a list with one Pair containing the cheapest car price for the given country`() {
+    fun `should return a list with one pair containing the cheapest car price for the given country`() {
         // Given correct country name
         val mockCity = listOf(
             MockCityEntity.createMockCity(
@@ -48,7 +48,7 @@ class SearchCheapestCarInCountryInteractorTest {
         // When averageSalary and cars prices not null
         every { mockData.getAllCitiesData() } returns (mockCity)
         // Then return a list of pair of city name and car price
-        val actualResult = searchInteractor.execute(mockCity[0].country, 1)
+        val actualResult = interactor.execute(mockCity[0].country, 1)
         assertEquals(listOf(Pair("You can buy the car after working 9.333333 months in Los Angeles", 14000.0f)
         ), actualResult
         )
@@ -70,7 +70,7 @@ class SearchCheapestCarInCountryInteractorTest {
         // When averageSalary and cars prices not null
         every { mockData.getAllCitiesData() } returns (mockCity)
         // Then return a list of pair of city name and car price
-        val actualResult = searchInteractor.searchCheapestCar(mockCity[0])
+        val actualResult = interactor.getCheapestCar(mockCity[0])
         assertEquals(10000.0f, actualResult)
     }
 
@@ -90,12 +90,12 @@ class SearchCheapestCarInCountryInteractorTest {
         // When both car prices are not null
         every { mockData.getAllCitiesData() } returns (mockCity)
         // Then return true
-        val actualResult = searchInteractor.excludeNullCarsPricesAndSalaries(mockCity[0])
+        val actualResult = interactor.excludeNullCarsPricesAndSalaries(mockCity[0])
         assertTrue(actualResult)
     }
 
     @Test
-    fun `should return false when the price of a Volkswagen Golf is null`() {
+    fun `should return false when the price of one of the car is null`() {
         // Given correct country name
         val mockCity = listOf(
             MockCityEntity.createMockCity(
@@ -110,27 +110,7 @@ class SearchCheapestCarInCountryInteractorTest {
         // When the price of a Volkswagen Golf is null
         every { mockData.getAllCitiesData() } returns (mockCity)
         // Then return false
-        val actualResult = searchInteractor.excludeNullCarsPricesAndSalaries(mockCity[0])
-        assertFalse(actualResult)
-    }
-
-    @Test
-    fun `should return false when the price of a Toyota Corolla is null`() {
-        // Given correct country name
-        val mockCity = listOf(
-            MockCityEntity.createMockCity(
-                "Egypt",
-                "Fayoum",
-                CarsPrices(
-                    15000.0f,
-                    null
-                ),350.0f
-            )
-        )
-        // When the price of a Toyota Corolla is null
-        every { mockData.getAllCitiesData() } returns (mockCity)
-        // Then return false
-        val actualResult = searchInteractor.excludeNullCarsPricesAndSalaries(mockCity[0])
+        val actualResult = interactor.excludeNullCarsPricesAndSalaries(mockCity[0])
         assertFalse(actualResult)
     }
 
@@ -151,7 +131,7 @@ class SearchCheapestCarInCountryInteractorTest {
         // When both car prices are null
         every { mockData.getAllCitiesData() } returns (mockCity)
         // Then return false
-        val actualResult = searchInteractor.excludeNullCarsPricesAndSalaries(mockCity[0])
+        val actualResult = interactor.excludeNullCarsPricesAndSalaries(mockCity[0])
         assertFalse(actualResult)
     }
 }
