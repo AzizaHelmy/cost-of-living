@@ -22,8 +22,8 @@ class GetCityHasMostSuitableFitnessClubInteractor(private val dataSource: CostOf
         return city.transportationsPrices.oneWayTicketLocalTransport
     }
 
-    fun isCityHasFitnessClubMonthlyFeeForOneAdult(city: CityEntity): Float? {
-        return city.servicesPrices.fitnessClubMonthlyFeeForOneAdult
+    fun isCityHasFitnessClubMonthlyFeeForOneAdult(city: CityEntity): Boolean {
+        return city.servicesPrices.fitnessClubMonthlyFeeForOneAdult != null
     }
 }
 

@@ -157,7 +157,7 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
     }
 
     @Test
-    fun `should return value when the city has fitness club monthly fee for one adult`() {
+    fun `should return true when the city has fitness club monthly fee for one adult`() {
         // given mock city entity data and the expected value
         val mockCity = createMockCity(
             "United Kingdom",
@@ -170,11 +170,11 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         //when check if the city has fitness club monthly fee for one adult
         val cityResult = classUnderTest.isCityHasFitnessClubMonthlyFeeForOneAdult(mockCity)
         //then
-        assertNotNull(cityResult)
+        assertTrue(cityResult)
     }
 
     @Test
-    fun `should return value when the city hasn't fitness club monthly fee for one adult`() {
+    fun `should return false when the city hasn't fitness club monthly fee for one adult`() {
         // given mock city entity data and the expected value
         val mockCity = createMockCity(
             "United Kingdom",
@@ -187,6 +187,6 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         //when check if the city has no fitness club monthly fee for one adult
         val cityResult = classUnderTest.isCityHasFitnessClubMonthlyFeeForOneAdult(mockCity)
         //then
-        assertNull(cityResult)
+        assertFalse(cityResult)
     }
 }
