@@ -1,7 +1,10 @@
 package interactor
 
-import io.mockk.*
-import mockData.MockCityEntity.createMockCity
+import io.mockk.clearAllMocks
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.unmockkAll
+import mockdata.MockCityEntity.createMockCity
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -11,14 +14,14 @@ import org.junit.jupiter.api.function.Executable
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GetCityHasMostSuitableFitnessClubInteractorTest {
 
-    private lateinit var classUnderTest: GetCityHasMostSuitableFitnessClubInteractor
-    private var mockData = mockk<CostOfLivingDataSource>()
+    private lateinit var interactor: GetCityHasMostSuitableFitnessClubInteractor
+    private val mockData = mockk<CostOfLivingDataSource>()
 
     @BeforeAll
     fun setUp() {
         clearAllMocks()
         unmockkAll()
-        classUnderTest = GetCityHasMostSuitableFitnessClubInteractor(mockData)
+        interactor = GetCityHasMostSuitableFitnessClubInteractor(mockData)
     }
 
     @Test
@@ -33,7 +36,7 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         )
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
         //when check if the data quality is true
-        val cityResult = classUnderTest.excludeLowQualityData(mockCity)
+        val cityResult = interactor.excludeLowQualityData(mockCity)
         //then
         assertTrue(cityResult)
     }
@@ -50,7 +53,7 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         )
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
         //when check if the data quality is true
-        val cityResult = classUnderTest.excludeLowQualityData(mockCity)
+        val cityResult = interactor.excludeLowQualityData(mockCity)
         //then
         assertFalse(cityResult)
     }
@@ -67,7 +70,7 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         )
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
         // when return true if the country of the city is United Kingdom
-        val result = classUnderTest.isCitiesInUnitedKingdomGermanyAndFrance(mockCity)
+        val result = interactor.isCitiesInUnitedKingdomGermanyAndFrance(mockCity)
         // then
         assertTrue(result)
     }
@@ -84,7 +87,7 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         )
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
         // when return true if the country of the city is Germany
-        val result = classUnderTest.isCitiesInUnitedKingdomGermanyAndFrance(mockCity)
+        val result = interactor.isCitiesInUnitedKingdomGermanyAndFrance(mockCity)
         // then
         assertTrue(result)
     }
@@ -101,7 +104,7 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         )
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
         // when return true if the country of the city is France
-        val result = classUnderTest.isCitiesInUnitedKingdomGermanyAndFrance(mockCity)
+        val result = interactor.isCitiesInUnitedKingdomGermanyAndFrance(mockCity)
         // then
         assertTrue(result)
     }
@@ -118,7 +121,7 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         )
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
         // when return true if the country of the city is Spain
-        val result = classUnderTest.isCitiesInUnitedKingdomGermanyAndFrance(mockCity)
+        val result = interactor.isCitiesInUnitedKingdomGermanyAndFrance(mockCity)
         // then
         assertFalse(result)
     }
@@ -135,7 +138,7 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         )
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
         //when check if city has one way ticket
-        val cityResult = classUnderTest.isCityHasPriceOfTransportationOfOneWayTicket(mockCity)
+        val cityResult = interactor.isCityHasPriceOfTransportationOfOneWayTicket(mockCity)
         //then
         assertNotNull(cityResult)
     }
@@ -152,7 +155,7 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         )
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
         //when check if city has not one way ticket
-        val cityResult = classUnderTest.isCityHasPriceOfTransportationOfOneWayTicket(mockCity)
+        val cityResult = interactor.isCityHasPriceOfTransportationOfOneWayTicket(mockCity)
         //then
         assertNull(cityResult)
     }
@@ -169,7 +172,7 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         )
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
         //when check if the city has fitness club monthly fee for one adult
-        val cityResult = classUnderTest.isCityHasFitnessClubMonthlyFeeForOneAdult(mockCity)
+        val cityResult = interactor.isCityHasFitnessClubMonthlyFeeForOneAdult(mockCity)
         //then
         assertTrue(cityResult)
     }
@@ -186,7 +189,7 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         )
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
         //when check if the city has no fitness club monthly fee for one adult
-        val cityResult = classUnderTest.isCityHasFitnessClubMonthlyFeeForOneAdult(mockCity)
+        val cityResult = interactor.isCityHasFitnessClubMonthlyFeeForOneAdult(mockCity)
         //then
         assertFalse(cityResult)
     }
@@ -196,7 +199,7 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         // given limit is negative
         val negativeLimit = -2
         //when execute function throw exception
-        val executeResult = Executable { classUnderTest.execute(limit = negativeLimit) }
+        val executeResult = Executable { interactor.execute(limit = negativeLimit) }
         //then
         assertThrows(Throwable::class.java, executeResult)
     }

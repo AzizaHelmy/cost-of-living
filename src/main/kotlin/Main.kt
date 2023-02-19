@@ -1,11 +1,6 @@
 import dataSource.CsvDataSource
 import dataSource.utils.CsvParser
-import enums.TheTypeOfApartments
 import interactor.*
-import interactor.CostOfLivingDataSource
-import interactor.GetCityHasLowestYearsToBuyApartmentInteractor
-import interactor.GetCityHasAverageMealPricesInteractor
-import interactor.GetSalaryAverageForCitiesInCountryInteractor
 
 fun main() {
     val csvParser = CsvParser()
@@ -37,11 +32,11 @@ fun main() {
     //region 4-CityHasHighestDifferentRentBetweenCityCenterAndOutside
     val getCityHasHighestDifferentRentBetweenCityCenterAndOutside =
         GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteractor(dataSource)
-    println(getCityHasHighestDifferentRentBetweenCityCenterAndOutside.execute(TheTypeOfApartments.ONE_BED_ROOM))
+    println(getCityHasHighestDifferentRentBetweenCityCenterAndOutside.execute())
     printSeparationLine()
     //endregion
     //region 5-Top5CitiesNameHasSuitableClothesPrices
-    val  numberOfCityShouldReturn = 5
+    val numberOfCityShouldReturn = 5
     val getTop5NamesCitiesHasClothesFamousBrandsWithSuitablePricesInteractor =
         GetTopCitiesNameHasSuitableClothesPricesInteractor(dataSource)
     println(getTop5NamesCitiesHasClothesFamousBrandsWithSuitablePricesInteractor.execute(numberOfCityShouldReturn))
@@ -75,15 +70,15 @@ fun main() {
     //endregion
     //region 11-SearchCheapestCarInCountryInteractor
     val searchCheapestCarInCountryInteractor = SearchCheapestCarInCountryInteractor(dataSource)
-    println(searchCheapestCarInCountryInteractor.execute("Egypt",3))
+    println(searchCheapestCarInCountryInteractor.execute("Egypt", 3))
     printSeparationLine()
     //endregion
-
-    // region GetCityHasMostSuitableFitnessClub
+    //region 12-GetCityHasMostSuitableFitnessClub
     val getCityHasMostSuitableFitnessClub = GetCityHasMostSuitableFitnessClubInteractor(dataSource)
     println(getCityHasMostSuitableFitnessClub.execute(limit = 5))
     printSeparationLine()
     // endregion
+
 }
 
 private fun printSeparationLine() {

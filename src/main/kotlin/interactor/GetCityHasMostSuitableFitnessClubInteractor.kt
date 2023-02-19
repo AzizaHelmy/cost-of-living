@@ -18,11 +18,13 @@ class GetCityHasMostSuitableFitnessClubInteractor(private val dataSource: CostOf
             }
             .take(limit)
             .map {
-                Triple(
-                    it.cityName,
-                    it.servicesPrices.fitnessClubMonthlyFeeForOneAdult!!,
-                    it.transportationsPrices.oneWayTicketLocalTransport!!
-                )
+                it.run {
+                    Triple(
+                        cityName,
+                        servicesPrices.fitnessClubMonthlyFeeForOneAdult!!,
+                        transportationsPrices.oneWayTicketLocalTransport!!
+                    )
+                }
             }
     }
 
@@ -34,7 +36,7 @@ class GetCityHasMostSuitableFitnessClubInteractor(private val dataSource: CostOf
         return city.run {
             country == SpecificCountries.UNITED_KINGDOM.nameOfCountry
                     || country == SpecificCountries.GERMANY.nameOfCountry
-                    ||country == SpecificCountries.FRANCE.nameOfCountry
+                    || country == SpecificCountries.FRANCE.nameOfCountry
         }
     }
 
