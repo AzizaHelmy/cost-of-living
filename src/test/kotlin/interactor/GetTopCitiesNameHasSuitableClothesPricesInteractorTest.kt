@@ -31,7 +31,7 @@ internal class GetTopCitiesNameHasSuitableClothesPricesInteractorTest {
     fun `should throw exception when limit is zero`() {
         //Given empty List
         val limit = 0
-        val citiesData = listOf<CityEntity>()
+        val citiesData = emptyList<CityEntity>()
         //when
         every { mockData.getAllCitiesData() } returns (citiesData)
         val namesCityHasSuitableClothesPrices = Executable { interactor.execute(limit) }
