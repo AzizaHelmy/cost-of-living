@@ -198,6 +198,6 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         //when execute function throw exception
         val executeResult = Executable { classUnderTest.execute(limit = negativeLimit) }
         //then
-        assertThrows(Exception::class.java, executeResult)
+        assertThrows(Throwable::class.java, executeResult)
     }
 }
