@@ -16,17 +16,14 @@ import kotlin.test.assertEquals
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GetTopCountryEnforceHighTaxesOnCarbonatedDrinksInteractorTest {
 
-    private lateinit var testingData: GetTopCountryEnforceHighTaxesOnCarbonatedDrinksInteractor
-    private val dataSource = mockk<CostOfLivingDataSource>()
+    private lateinit var interactor: GetTopCountryEnforceHighTaxesOnCarbonatedDrinksInteractor
+    private val mockData = mockk<CostOfLivingDataSource>()
 
     @BeforeAll
     fun setUpData() {
-        // clear and cancel all objects mock
         unmockkAll()
         clearAllMocks()
-
-        //set testing data from HighTaxesOnCarbonatedDrinks class
-        testingData = GetTopCountryEnforceHighTaxesOnCarbonatedDrinksInteractor(dataSource)
+        interactor = GetTopCountryEnforceHighTaxesOnCarbonatedDrinksInteractor(mockData)
     }
 
     @Test
@@ -43,10 +40,9 @@ class GetTopCountryEnforceHighTaxesOnCarbonatedDrinksInteractorTest {
             createMockCity("Albania", true, 2.0f),
             createMockCity("Syria", true, .82f)
         )
-
-        every { dataSource.getAllCitiesData() } returns mockCountry
+        every { mockData.getAllCitiesData() } returns mockCountry
         // When getting result
-        val actualList = testingData.execute(limit)
+        val actualList = interactor.execute(limit)
         // Then return listOf Pair(country name and the average prices for those drinks for this country)
         val expectedList = listOf(
             Pair("Cuba", 2.0f),
@@ -66,7 +62,7 @@ class GetTopCountryEnforceHighTaxesOnCarbonatedDrinksInteractorTest {
         // Given limit less than zero
         val limit = -1
         // When no data
-        val noData = Executable { testingData.execute(limit) }
+        val noData = Executable { interactor.execute(limit) }
         // Then should Throw Exception
         assertThrows(Exception::class.java, noData)
     }
@@ -85,10 +81,9 @@ class GetTopCountryEnforceHighTaxesOnCarbonatedDrinksInteractorTest {
             createMockCity("Albania",true, .02f),
             createMockCity("Syria", true,  4.4f)
         )
-
-        every { dataSource.getAllCitiesData() } returns mockCountry
+        every { mockData.getAllCitiesData() } returns mockCountry
         // When getting result
-        val actualList = testingData.execute(limit)
+        val actualList = interactor.execute(limit)
         // Then return listOf Pair(country name and the average prices for those drinks for this country)
         val expectedList = listOf(
             Pair("Syria", 4.4f),
@@ -98,7 +93,6 @@ class GetTopCountryEnforceHighTaxesOnCarbonatedDrinksInteractorTest {
         )
         assertEquals(expectedList, actualList)
     }
-
 
     @Test
     fun `should return empty list when has a low data quality`() {
@@ -114,10 +108,9 @@ class GetTopCountryEnforceHighTaxesOnCarbonatedDrinksInteractorTest {
             createMockCity("Albania", false, 6.0f),
             createMockCity("Syria", false, 0.82f)
         )
-
-        every { dataSource.getAllCitiesData() } returns mockCountry
+        every { mockData.getAllCitiesData() } returns mockCountry
         // When getting result
-        val actualList = testingData.execute(limit)
+        val actualList = interactor.execute(limit)
         // Then return empty list
         assertEquals(emptyList(), actualList)
     }
