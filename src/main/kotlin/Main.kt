@@ -1,4 +1,4 @@
-import dataSource.CsvDataSource
+ import dataSource.CsvDataSource
 import dataSource.utils.CsvParser
 import dataSource.utils.GetCityNamesClothesPrices
 import enums.TheTypeOfApartments
@@ -11,6 +11,8 @@ import interactor.GetSalaryAverageForCitiesInCountryInteractor
 fun main() {
     val csvParser = CsvParser()
     val dataSource: CostOfLivingDataSource = CsvDataSource(csvParser)
+
+    /*
 
     // region HighestSalaryAverageCities
     val getHighestSalaryAverageCities = GetHighestSalaryAverageCititesNamesInteractor(dataSource)
@@ -75,7 +77,23 @@ fun main() {
     println(getSuitableCityMoreSavingPerMonth.execute())
     printSeparationLine()
     //endregion
+*/
 
+    val getCityHasCheapestCappuccinoRegularInRestaurants =
+        GetCityHasCheapestCappuccinoRegularInRestaurantsInteractor(dataSource)
+    println(getCityHasCheapestCappuccinoRegularInRestaurants.execute("United States"))
+    println(getCityHasCheapestCappuccinoRegularInRestaurants.execute("France"))
+    println(getCityHasCheapestCappuccinoRegularInRestaurants.execute("Turkey"))
+    printSeparationLine()
+
+/*
+    val getSalaryAverageForCitiesInCountry = GetSalaryAverageForCitiesInCountryInteractor(dataSource)
+    println(getSalaryAverageForCitiesInCountry.execute("Egypt"))
+    println(getSalaryAverageForCitiesInCountry.execute("Turkey"))
+    println(getSalaryAverageForCitiesInCountry.execute("syria"))
+    printSeparationLine()
+
+ */
 }
 
 private fun printSeparationLine() {
