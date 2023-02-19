@@ -76,6 +76,11 @@ fun main() {
     printSeparationLine()
     //endregion
 
+    // region GetCityHasMostSuitableFitnessClub
+    val getCityHasMostSuitableFitnessClub = GetCityHasMostSuitableFitnessClubInteractor(dataSource)
+    println(getCityHasMostSuitableFitnessClub.execute(limit = 5))
+    printSeparationLine()
+    // endregion
 }
 
 private fun printSeparationLine() {

@@ -5,7 +5,25 @@ import model.CityEntity
 class GetCityHasMostSuitableFitnessClubInteractor(private val dataSource: CostOfLivingDataSource) {
 
     fun execute(limit: Int): List<Triple<String, Float, Float>> {
-        TODO("NOT IMPLEMENTED YET")
+        if (limit < 0) throw Throwable("Limit is negative")
+        return dataSource
+            .getAllCitiesData()
+            .filter {
+                isCitiesInUnitedKingdomGermanyAndFrance(it)
+                        && excludeLowQualityData(it)
+                        && isCityHasFitnessClubMonthlyFeeForOneAdult(it)
+            }
+            .sortedBy {
+                isCityHasPriceOfTransportationOfOneWayTicket(it)
+            }
+            .take(limit)
+            .map {
+                Triple(
+                    it.cityName,
+                    it.servicesPrices.fitnessClubMonthlyFeeForOneAdult!!,
+                    it.transportationsPrices.oneWayTicketLocalTransport!!
+                )
+            }
     }
 
     fun excludeLowQualityData(city: CityEntity): Boolean {
