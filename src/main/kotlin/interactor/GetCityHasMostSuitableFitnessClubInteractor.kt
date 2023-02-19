@@ -4,7 +4,7 @@ import model.CityEntity
 
 class GetCityHasMostSuitableFitnessClubInteractor(private val dataSource: CostOfLivingDataSource) {
 
-    fun execute(): List<Triple<String, Float, Float>> {
+    fun execute(limit: Int): List<Triple<String, Float, Float>> {
         TODO("NOT IMPLEMENTED YET")
     }
 
