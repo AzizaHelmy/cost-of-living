@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.function.Executable
 
 /**
  * Created by Mohamed Elgohary on 2/17/2023.
@@ -18,14 +19,14 @@ import org.junit.jupiter.api.TestInstance
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SearchCheapestCarInCountryInteractorTest {
 
-    private lateinit var searchInteractor: SearchCheapestCarInCountryInteractor
+    private lateinit var interactor: SearchCheapestCarInCountryInteractor
     private val mockData = mockk<CostOfLivingDataSource>()
 
     @BeforeAll
     fun setup() {
         unmockkAll()
         clearAllMocks()
-        searchInteractor = SearchCheapestCarInCountryInteractor(mockData)
+        interactor = SearchCheapestCarInCountryInteractor(mockData)
     }
 
     @Test
@@ -34,23 +35,26 @@ class SearchCheapestCarInCountryInteractorTest {
         val mockCity = listOf(
             MockCityEntity.createMockCity(
                 "UNITED STATES", "New York",
-                CarsPrices(18000.0f,
+                CarsPrices(
+                    18000.0f,
                     15000.0f
                 ), 1300.0f
             ),
-            MockCityEntity.createMockCity("UNITED STATES", "Los Angeles",
+            MockCityEntity.createMockCity(
+                "UNITED STATES", "Los Angeles",
                 CarsPrices(
                     17000.0f,
                     14000.0f
                 ), 1500.0f
             )
         )
-        // When averageSalary and cars prices not null
         every { mockData.getAllCitiesData() } returns (mockCity)
+        // When averageSalary and cars prices not null
+        val actualResult = interactor.execute(mockCity[0].country, 1)
         // Then return a list of pair of city name and car price
-        val actualResult = searchInteractor.execute(mockCity[0].country, 1)
-        assertEquals(listOf(Pair("You can buy the car after working 9.333333 months in Los Angeles", 14000.0f)
-        ), actualResult
+        assertEquals(listOf(
+                Pair("You can buy the car after working 9.333333 months in Los Angeles", 14000.0f)
+            ), actualResult
         )
     }
 
@@ -67,10 +71,10 @@ class SearchCheapestCarInCountryInteractorTest {
                 ), 500.0f
             )
         )
-        // When averageSalary and cars prices not null
         every { mockData.getAllCitiesData() } returns (mockCity)
+        // When averageSalary and cars prices not null
+        val actualResult = interactor.searchCheapestCar(mockCity[0])
         // Then return a list of pair of city name and car price
-        val actualResult = searchInteractor.searchCheapestCar(mockCity[0])
         assertEquals(10000.0f, actualResult)
     }
 
@@ -87,10 +91,10 @@ class SearchCheapestCarInCountryInteractorTest {
                 ), 2000.0f
             )
         )
-        // When both car prices are not null
         every { mockData.getAllCitiesData() } returns (mockCity)
+        // When both car prices are not null
+        val actualResult = interactor.excludeNullCarsPricesAndSalaries(mockCity[0])
         // Then return true
-        val actualResult = searchInteractor.excludeNullCarsPricesAndSalaries(mockCity[0])
         assertTrue(actualResult)
     }
 
@@ -104,13 +108,13 @@ class SearchCheapestCarInCountryInteractorTest {
                 CarsPrices(
                     null,
                     13000.0f
-                ),400.0f
+                ), 400.0f
             )
         )
-        // When the price of a Volkswagen Golf is null
         every { mockData.getAllCitiesData() } returns (mockCity)
+        // When the price of a Volkswagen Golf is null
+        val actualResult = interactor.excludeNullCarsPricesAndSalaries(mockCity[0])
         // Then return false
-        val actualResult = searchInteractor.excludeNullCarsPricesAndSalaries(mockCity[0])
         assertFalse(actualResult)
     }
 
@@ -124,13 +128,13 @@ class SearchCheapestCarInCountryInteractorTest {
                 CarsPrices(
                     15000.0f,
                     null
-                ),350.0f
+                ), 350.0f
             )
         )
-        // When the price of a Toyota Corolla is null
         every { mockData.getAllCitiesData() } returns (mockCity)
+        // When the price of a Toyota Corolla is null
+        val actualResult = interactor.excludeNullCarsPricesAndSalaries(mockCity[0])
         // Then return false
-        val actualResult = searchInteractor.excludeNullCarsPricesAndSalaries(mockCity[0])
         assertFalse(actualResult)
     }
 
@@ -145,15 +149,26 @@ class SearchCheapestCarInCountryInteractorTest {
                 CarsPrices(
                     null,
                     null
-                ),1100.0f
+                ), 1100.0f
             )
         )
-        // When both car prices are null
         every { mockData.getAllCitiesData() } returns (mockCity)
+        // When both car prices are null
+        val actualResult = interactor.excludeNullCarsPricesAndSalaries(mockCity[0])
         // Then return false
-        val actualResult = searchInteractor.excludeNullCarsPricesAndSalaries(mockCity[0])
         assertFalse(actualResult)
     }
+
+    @Test
+    fun `should throw exception when the limit is negative`() {
+        // given negative limit
+        val negativeLimit = -1
+        //when execute function take a negative limit
+        val actualResult = Executable { interactor.execute("Cuba", negativeLimit) }
+        //then throw exception
+        assertThrows(Exception::class.java, actualResult)
+    }
+
 }
 
 
