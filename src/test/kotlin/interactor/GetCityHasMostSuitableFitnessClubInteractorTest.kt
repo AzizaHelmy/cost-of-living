@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.function.Executable
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GetCityHasMostSuitableFitnessClubInteractorTest {
@@ -188,5 +189,15 @@ class GetCityHasMostSuitableFitnessClubInteractorTest {
         val cityResult = classUnderTest.isCityHasFitnessClubMonthlyFeeForOneAdult(mockCity)
         //then
         assertFalse(cityResult)
+    }
+
+    @Test
+    fun `should throw exception when the limit is negative`() {
+        // given limit is negative
+        val negativeLimit = -2
+        //when execute function throw exception
+        val executeResult = Executable { classUnderTest.execute(limit = negativeLimit) }
+        //then
+        assertThrows(Exception::class.java, executeResult)
     }
 }
