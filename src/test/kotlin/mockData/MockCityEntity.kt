@@ -1021,4 +1021,86 @@ object MockCityEntity {
 
     }
     // endregion for GetCityHasLowestYearsToBuyApartmentInteractor
+
+    // Start region for GetCityHasCheapestCappuccinoRegularInRestaurantsInteractor (Another Feature)
+    fun createMockCity(
+        cappuccinoRegularInRestaurants: Float?,
+        countryName: String,
+        cityName: String,
+        dataQuality: Boolean
+    ): CityEntity {
+        return CityEntity(
+            cityName,
+            countryName,
+            MealsPrices(
+                null,
+                null,
+                null
+            ),
+            DrinksPrices(
+                cappuccinoRegularInRestaurants,
+                null,
+                null,
+                null,
+                null
+            ),
+            FruitAndVegetablesPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            FoodPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            ServicesPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            ClothesPrices(
+                null,
+                null,
+                null,
+                null
+            ),
+            TransportationsPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            CarsPrices(
+                null,
+                null
+            ),
+            RealEstatesPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            null,
+            dataQuality,
+        )
+
+    }
+    // End region for GetSalaryAverageForCitiesInCountryInteractor
 }

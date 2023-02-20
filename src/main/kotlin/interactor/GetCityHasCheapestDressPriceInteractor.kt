@@ -4,7 +4,7 @@ import model.CityEntity
 
 class GetCityHasCheapestDressPriceInteractor(private val dataSource: CostOfLivingDataSource) {
 
-    fun execute(limit: Int, countryName: String): List<Pair<String, Float?>> {
+    fun execute(limit: Int, countryName: String): List<Pair<String, Float>> {
 
         return dataSource
             .getAllCitiesData()
@@ -12,7 +12,7 @@ class GetCityHasCheapestDressPriceInteractor(private val dataSource: CostOfLivin
             .sortedBy { city -> city.clothesPrices.oneSummerDressInAChainStoreZaraHAndM }
             .takeIf { city -> city.isNotEmpty() }?.let {
                 it.take(limit)
-                .map { Pair(it.cityName, it.clothesPrices.oneSummerDressInAChainStoreZaraHAndM) }
+                .map { Pair(it.cityName, it.clothesPrices.oneSummerDressInAChainStoreZaraHAndM!!) }
             } ?: throw Exception("No cities found in country $countryName")
 
     }

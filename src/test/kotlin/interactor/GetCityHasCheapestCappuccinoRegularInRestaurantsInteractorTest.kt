@@ -4,7 +4,7 @@ import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll
-import mockData.MockCityEntity
+import mockdata.MockCityEntity
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeAll
@@ -18,8 +18,8 @@ import org.junit.jupiter.api.function.Executable
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GetCityHasCheapestCappuccinoRegularInRestaurantsInteractorTest {
 
-    private val dataSource = mockk<CostOfLivingDataSource>()
     private lateinit var interactor: GetCityHasCheapestCappuccinoRegularInRestaurantsInteractor
+    private val dataSource = mockk<CostOfLivingDataSource>()
 
     @BeforeAll
     fun setUp (){
@@ -38,10 +38,10 @@ class GetCityHasCheapestCappuccinoRegularInRestaurantsInteractorTest {
                 cityName = "Amarillo" ,
                 dataQuality = true
             ) ) //(Amarillo, 3.34)
-        // When Cappuccino Regular price is not null and high dataQuality
         every { dataSource.getAllCitiesData()} returns (mockCity)
-        // Then return a list of pair of city name and Cappuccino Regular price
+        // When Cappuccino Regular price is not null and high dataQuality
         val result = interactor.execute(mockCity[0].country)
+        // Then return a list of pair of city name and Cappuccino Regular price
         assertEquals(listOf(Pair("Amarillo", 3.34f)), result)
     }
 
@@ -55,12 +55,10 @@ class GetCityHasCheapestCappuccinoRegularInRestaurantsInteractorTest {
                 cityName = "Paris" ,
                 dataQuality = true
             ) )  //(Paris, 3.89)
-
-        // When Cappuccino Regular price is not null and high dataQuality
         every { dataSource.getAllCitiesData()} returns (mockCity)
-
-        // Then return a list of pair of city name and Cappuccino Regular price
+        // When Cappuccino Regular price is not null and high dataQuality
         val actualResult = interactor.execute(mockCity[0].country)
+        // Then return a list of pair of city name and Cappuccino Regular price
         assertEquals(listOf(Pair("Paris", 3.89f)), actualResult)
     }
 
@@ -76,12 +74,9 @@ class GetCityHasCheapestCappuccinoRegularInRestaurantsInteractorTest {
                 dataQuality = true
             ) )
         //(Istanbul, 1.98)
-
         every { dataSource.getAllCitiesData() } returns (mockCity)
-
         // When Cappuccino Regular not null and high dataQuality
         val actualList = interactor.execute(mockCity[0].country)
-
         // Then return a list of pair of city name and Cappuccino Regular
         assertEquals(listOf(Pair("Istanbul", 1.98f)), actualList)
     }
@@ -97,13 +92,10 @@ class GetCityHasCheapestCappuccinoRegularInRestaurantsInteractorTest {
             cityName = "Istanbul" ,
             dataQuality = true
         ) )
-
         val exception = IllegalStateException("You entered an empty country name!")
         every { dataSource.getAllCitiesData() } throws (exception)
-
         // When country name is empty
         val result = Executable { interactor.execute(mockCity[0].country) }
-
         // Then return Throw Exception
         assertThrows(Exception::class.java, result)
     }
@@ -119,14 +111,10 @@ class GetCityHasCheapestCappuccinoRegularInRestaurantsInteractorTest {
                 cityName = "Istanbul" ,
                 dataQuality = false
             ) )
-
         every { dataSource.getAllCitiesData() } returns (mockCity)
-
         // When cappuccino regular is not null and high dataQuality
-        val Result = interactor.excludeNullCappuccinoRegularInRestaurantsAndLowQualityData(mockCity[0])
-
+        val result = interactor.excludeNullCappuccinoRegularInRestaurantsAndLowQualityData(mockCity[0])
         // Then return false
-        assertFalse(Result)
+        assertFalse(result)
     }
-
 }

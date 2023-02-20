@@ -78,7 +78,16 @@ fun main() {
     println(getCityHasMostSuitableFitnessClub.execute(limit = 5))
     printSeparationLine()
     // endregion
-
+    //region 13-GetCityHasCheapestDressPriceInteractor
+    val getCityHasCheapestDressPriceInteractor = GetCityHasCheapestDressPriceInteractor(dataSource)
+    println(getCityHasCheapestDressPriceInteractor.execute(5,"Egypt"))
+    printSeparationLine()
+    // endregion
+    //region 14-GetCityHasCheapestCappuccinoRegularInRestaurantsInteractor
+    val getCityHasCheapestCappuccinoRegularInRestaurants = GetCityHasCheapestCappuccinoRegularInRestaurantsInteractor(dataSource)
+    println(getCityHasCheapestCappuccinoRegularInRestaurants.execute("Egypt"))
+    printSeparationLine()
+    // endregion
 }
 
 private fun printSeparationLine() {
