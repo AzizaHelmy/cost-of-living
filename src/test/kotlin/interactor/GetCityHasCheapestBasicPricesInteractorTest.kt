@@ -13,61 +13,65 @@ import org.junit.jupiter.api.TestInstance
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 
-internal class GetCheapestBasicPricesInAllCitiesComparingToAverageSalariesInteractorTest{
+internal class GetCityHasCheapestBasicPricesInteractorTest {
 
-    private lateinit var interactor: GetCheapestBasicPricesInAllCitiesComparingToAverageSalariesInteractor
+    private lateinit var interactor: GetCityHasCheapestBasicPricesInteractor
     private var mockData = mockk<CostOfLivingDataSource>()
-
 
     @BeforeAll
     fun setUp() {
         clearAllMocks()
         unmockkAll()
-        interactor = GetCheapestBasicPricesInAllCitiesComparingToAverageSalariesInteractor(mockData)
+        interactor = GetCityHasCheapestBasicPricesInteractor(mockData)
     }
 
     @Test
     fun `should return false when the city has one or more value is null`() {
         val expected = false
         val listOfCityEntity = listOf(
-            createMockCity("us" , 6000.0F , null
-                , null, 50.0F ))
+            createMockCity(
+                "us", 6000.0F, null, null, 50.0F
+            )
+        )
 
-        // when return the country of the city is Canada
         every { mockData.getAllCitiesData() } returns listOfCityEntity
-        val result = interactor.execludeNullSalaryAndQualityDataAndOtherBaicPrices(listOfCityEntity[0])
+        // when return the country of the city is Canada
+        val result = interactor.excludeNullSalaryLowQualityDataAndOtherBasicPrices(listOfCityEntity[0])
         // then
         assertEquals(expected, result)
 
     }
-
 
     @Test
     fun `should return false when the city has null values`() {
         // given for all values is null
         val expected = false
         val listOfCityEntity = listOf(
-            createMockCity("us" , null , null
-                , null , null ))
+            createMockCity(
+                "us", null, null, null, null
+            )
+        )
         every { mockData.getAllCitiesData() } returns listOfCityEntity
-        // when execlude null values
-        val result = interactor.execludeNullSalaryAndQualityDataAndOtherBaicPrices(listOfCityEntity[0])
+        // when exclude null values
+        val result = interactor.excludeNullSalaryLowQualityDataAndOtherBasicPrices(listOfCityEntity[0])
         // then
         assertEquals(expected, result)
 
     }
-
 
     @Test
     fun `should return true when the city has value for all data`() {
         // given values for all data
         val expected = true
         val listOfCityEntity = listOf(
-            createMockCity("us" , 2000.0F , 300.0F ,
-                200.0F, 100.0F ))
+            createMockCity(
+                "us", 2000.0F, 300.0F,
+                200.0F, 100.0F
+            )
+        )
         every { mockData.getAllCitiesData() } returns listOfCityEntity
-        // when execlude null values
-        val result = interactor.execludeNullSalaryAndQualityDataAndOtherBaicPrices(listOfCityEntity[0])
+        // when exclude null values
+        val result = interactor.excludeNullSalaryLowQualityDataAndOtherBasicPrices(listOfCityEntity[0])
         // then
         assertEquals(expected, result)
 
@@ -77,10 +81,10 @@ internal class GetCheapestBasicPricesInAllCitiesComparingToAverageSalariesIntera
     fun `should return city entity when cities list is not empty`() {
         // given list of cityEntity using mock
         val citiesData = listOf(
-            createMockCity("Switzerland" , 5000.0F , 800.0F , 200.0F, 200.0F )
-            , createMockCity("united state", 3500.0F , 500.0F , 100.0F, 200.0F )
-            , createMockCity("london", 2000.0F , 500.0F , 100.0F, 200.0F )
-            , createMockCity("canada" , 1500.0F , 500.0F , 100.0F, 200.0F )
+            createMockCity("Switzerland", 5000.0F, 800.0F, 200.0F, 200.0F),
+            createMockCity("united state", 3500.0F, 500.0F, 100.0F, 200.0F),
+            createMockCity("london", 2000.0F, 500.0F, 100.0F, 200.0F),
+            createMockCity("canada", 1500.0F, 500.0F, 100.0F, 200.0F)
         )
         every { mockData.getAllCitiesData() } returns citiesData
         // when execute return a cityEntity
@@ -97,8 +101,6 @@ internal class GetCheapestBasicPricesInAllCitiesComparingToAverageSalariesIntera
         // when the result will be null
         val result = interactor.execute()
         // then
-        assertNull( result)
+        assertNull(result)
     }
-
-
 }

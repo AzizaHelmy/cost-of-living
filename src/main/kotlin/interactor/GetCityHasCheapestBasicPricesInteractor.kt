@@ -2,23 +2,25 @@ package interactor
 
 import model.CityEntity
 
-class GetCheapestBasicPricesInAllCitiesComparingToAverageSalariesInteractor (
+class GetCityHasCheapestBasicPricesInteractor(
     private val dataSource: CostOfLivingDataSource
 ) {
 
     fun execute(): CityEntity? {
         return dataSource
             .getAllCitiesData()
-            .filter { execludeNullSalaryAndQualityDataAndOtherBaicPrices(it) != null }
+            .filter(::excludeNullSalaryLowQualityDataAndOtherBasicPrices)
             .maxByOrNull {
-                (it.averageMonthlyNetSalaryAfterTax)!! -
-                        (it.transportationsPrices.monthlyPassRegularPrice
-                        !! + it.servicesPrices.basicElectricityHeatingCoolingWaterGarbageFor85m2Apartment!!
-                                + it.realEstatesPrices.apartmentOneBedroomInCityCentre!!)
+                it.run {
+                    averageMonthlyNetSalaryAfterTax!! -
+                            (transportationsPrices.monthlyPassRegularPrice!!
+                                    + servicesPrices.basicElectricityHeatingCoolingWaterGarbageFor85m2Apartment!!
+                                    + realEstatesPrices.apartmentOneBedroomInCityCentre!!)
+                }
             }
     }
 
-    fun execludeNullSalaryAndQualityDataAndOtherBaicPrices(cityEntity: CityEntity): Boolean? {
+    fun excludeNullSalaryLowQualityDataAndOtherBasicPrices(cityEntity: CityEntity): Boolean {
         return cityEntity.run {
             dataQuality
                     && averageMonthlyNetSalaryAfterTax != null
