@@ -625,6 +625,79 @@ object MockCityEntity {
     }
     // endregion for GetCityHasCheapestMealPricesInteractor (Problem 8)
 
+    // start GetCheapestBasicPricesInAllCitiesComparingToAverageSalariesInteractor (Problem 8)
+    fun createMockCity( mealsPrices: MealsPrices): CityEntity {
+        return CityEntity(
+            "cityName",
+            "countryName",
+            mealsPrices,
+            DrinksPrices(
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            FruitAndVegetablesPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            FoodPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            ServicesPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            ClothesPrices(
+                null,
+                null,
+                null,
+                null
+            ),
+            TransportationsPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            CarsPrices(
+                null,
+                null
+            ),
+            RealEstatesPrices(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ),
+            null,
+            true
+        )
+
+    }
+    // End region for GetCityWithCheapestInternationalPrimarySchoolForOneChildInteractor (Problem 8)
+
     // region for GetTopTenCountryEnforceHighTaxesOnCarbonatedDrinksInteractor (Problem 9)
     fun createMockCity(
         countryName: String,
@@ -858,7 +931,8 @@ object MockCityEntity {
 
     }
     // endregion for SearchCheapestCarInCountryInteractor (Problem 11)
-    // region GetCityHasMostSuitableFitnessClubInteractor
+
+    // region GetCityHasMostSuitableFitnessClubInteractor (Problem 12)
     fun createMockCity(
         countryName: String,
         cityName: String,
@@ -939,7 +1013,7 @@ object MockCityEntity {
         )
 
     }
-    // endregion GetCityHasMostSuitableFitnessClubInteractor
+    // endregion GetCityHasMostSuitableFitnessClubInteractor (Problem 12)
 
     // region for GetCityHasLowestYearsToBuyApartmentInteractor (Problem 13)
     fun createMockCity(
@@ -1020,9 +1094,9 @@ object MockCityEntity {
         )
 
     }
-    // endregion for GetCityHasLowestYearsToBuyApartmentInteractor
+    // endregion for GetCityHasLowestYearsToBuyApartmentInteractor (Problem 13)
 
-    // Start region for GetCityHasCheapestCappuccinoRegularInRestaurantsInteractor (Another Feature)
+    // Start region for GetCityHasCheapestCappuccinoRegularInRestaurantsInteractor (Problem 14)
     fun createMockCity(
         cappuccinoRegularInRestaurants: Float?,
         countryName: String,
@@ -1102,9 +1176,9 @@ object MockCityEntity {
         )
 
     }
-    // End region for GetSalaryAverageForCitiesInCountryInteractor
+    // End region for GetSalaryAverageForCitiesInCountryInteractor (Problem 14)
 
-    // Start region for GetCityWithCheapestInternationalPrimarySchoolForOneChildInteractor (Problem 11)
+    // Start region for GetCityWithCheapestInternationalPrimarySchoolForOneChildInteractor (Problem 15)
     fun createMockCity(
         internationalPrimarySchoolYearlyForOneChild: Float?,
         cityName: String,
@@ -1182,9 +1256,9 @@ object MockCityEntity {
         )
 
     }
-    // End region for GetCityWithCheapestInternationalPrimarySchoolForOneChildInteractor (Problem 11)
+    // End region for GetCityWithCheapestInternationalPrimarySchoolForOneChildInteractor (Problem 15)
 
-    // start GetCheapestBasicPricesInAllCitiesComparingToAverageSalariesInteractor
+    // start GetCheapestBasicPricesInAllCitiesComparingToAverageSalariesInteractor (Problem 16)
     fun createMockCity(
         countryName: String,
         averageMonthlyNetSalaryAfterTax: Float?,
@@ -1265,5 +1339,9 @@ object MockCityEntity {
         )
 
     }
+    // End region for GetCityWithCheapestInternationalPrimarySchoolForOneChildInteractor (Problem 16)
+
+
+
 
 }

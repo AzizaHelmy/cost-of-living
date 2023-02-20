@@ -74,12 +74,11 @@ class GetCityHasAverageMealPricesInteractorTest {
     @Test
     fun `should return false when the city has no averageMeal price and InexpensiveMeal`() {
         // given mealFor2PeopleMidRangeRestaurant , mealInexpensiveRestaurant is null
-        val city: CityEntity = mockk()
-        every { city.mealsPrices.mealFor2PeopleMidRangeRestaurant } returns null
-        every { city.mealsPrices.mealInexpensiveRestaurant } returns null
-        every { city.mealsPrices.mealAtMcDonaldSOrEquivalent } returns 4.0F
+        val mealPrices = MealsPrices(null, null, 4.0F)
+        val mockCity = createMockCity(mealPrices)
+        every { mockData.getAllCitiesData() } returns listOf(mockCity)
         // when check if city has average meal
-        val result = interactor.excludeNullMealPrices(city)
+        val result = interactor.excludeNullMealPrices(mockCity)
         // then
         assertEquals(false, result)
     }
@@ -87,12 +86,11 @@ class GetCityHasAverageMealPricesInteractorTest {
     @Test
     fun `should return false when the city has no averageMeal price and Expensive`() {
         // given mealFor2PeopleMidRangeRestaurant , mealAtMcDonaldSOrEquivalent is null
-        val city: CityEntity = mockk()
-        every { city.mealsPrices.mealFor2PeopleMidRangeRestaurant } returns null
-        every { city.mealsPrices.mealInexpensiveRestaurant } returns 4.0F
-        every { city.mealsPrices.mealAtMcDonaldSOrEquivalent } returns null
+        val mealPrices = MealsPrices(4.0F, null, null)
+        val mockCity = createMockCity(mealPrices)
+        every { mockData.getAllCitiesData() } returns listOf(mockCity)
         // when check if city has average meal
-        val result = interactor.excludeNullMealPrices(city)
+        val result = interactor.excludeNullMealPrices(mockCity)
         // then
         assertEquals(false, result)
     }
@@ -100,13 +98,11 @@ class GetCityHasAverageMealPricesInteractorTest {
     @Test
     fun `should return true when the city has AverageMeal`() {
         // given all mealPrices data
-        val city: CityEntity = mockk()
-        every { city.mealsPrices.mealFor2PeopleMidRangeRestaurant } returns 6.0F
-        every { city.mealsPrices.mealInexpensiveRestaurant } returns 6.0F
-        every { city.mealsPrices.mealAtMcDonaldSOrEquivalent } returns 2.0F
-
+        val mealPrices = MealsPrices(2.0F, 6.0F, 6.0F)
+        val mockCity = createMockCity(mealPrices)
+        every { mockData.getAllCitiesData() } returns listOf(mockCity)
         // when check if city has average meal
-        val result = interactor.excludeNullMealPrices(city)
+        val result = interactor.excludeNullMealPrices(mockCity)
         // then
         assertEquals(true, result)
     }
@@ -114,13 +110,11 @@ class GetCityHasAverageMealPricesInteractorTest {
     @Test
     fun `should return true when the city has InexpensiveMeal and ExpensiveMeal`() {
         // given mealFor2PeopleMidRangeRestaurant is null
-        val city: CityEntity = mockk()
-        every { city.mealsPrices.mealFor2PeopleMidRangeRestaurant } returns null
-        every { city.mealsPrices.mealInexpensiveRestaurant } returns 6.0F
-        every { city.mealsPrices.mealAtMcDonaldSOrEquivalent } returns 2.0F
-
+        val mealPrices = MealsPrices(6.0F, null, 2.0F)
+        val mockCity = createMockCity(mealPrices)
+        every { mockData.getAllCitiesData() } returns listOf(mockCity)
         // when check if city has average meal
-        val result = interactor.excludeNullMealPrices(city)
+        val result = interactor.excludeNullMealPrices(mockCity)
         // then
         assertEquals(true, result)
     }
@@ -143,13 +137,15 @@ class GetCityHasAverageMealPricesInteractorTest {
             null,
             7.0F
         )
-        val mockCity = createMockCity("United States", "Collingswood", mealPrices)
-        val mockCity2 = createMockCity("Mexico", "Mexico", mealPrices2)
-        val mockCity3 = createMockCity("Canada", "Canada", mealPrices3)
-        every { mockData.getAllCitiesData() } returns listOf(mockCity, mockCity2, mockCity3)
+        val cityEntityList = listOf(
+            createMockCity("United States", "Collingswood", mealPrices),
+            createMockCity("Mexico", "Mexico", mealPrices2),
+            createMockCity("Canada", "Canada", mealPrices3)
+        )
+        every { mockData.getAllCitiesData() } returns cityEntityList
         // when list is not empty
         val cityResult = interactor.execute()
         // then
-        assertEquals(mockCity, cityResult)
+        assertEquals(cityEntityList[0], cityResult)
     }
 }
