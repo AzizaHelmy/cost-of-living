@@ -88,6 +88,11 @@ fun main() {
     println(getCityHasCheapestCappuccinoRegularInRestaurants.execute("Egypt"))
     printSeparationLine()
     // endregion
+    //region 15-getCityWithCheapestInternationalPrimarySchoolForOneChildInteractor
+    val getCityWithCheapestInternationalPrimarySchoolForOneChild = GetCityWithCheapestInternationalPrimarySchoolInteractor(dataSource)
+    println(getCityWithCheapestInternationalPrimarySchoolForOneChild.execute(0))
+    printSeparationLine()
+    // endregion
 }
 
 private fun printSeparationLine() {

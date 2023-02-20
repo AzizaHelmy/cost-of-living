@@ -5,8 +5,7 @@ import model.CityEntity
 class GetCityHasMostSuitableFitnessClubInteractor(private val dataSource: CostOfLivingDataSource) {
 
     fun execute(limit: Int): List<Triple<String, Float, Float>> {
-
-        return takeIf { limit > 0 }?.let { dataSource
+        return takeIf { limit >= 0 }?.let { dataSource
             .getAllCitiesData()
             .filter {
                 isCitiesInUnitedKingdomGermanyAndFrance(it)
