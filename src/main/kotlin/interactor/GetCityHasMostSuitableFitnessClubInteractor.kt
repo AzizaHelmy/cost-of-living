@@ -5,8 +5,8 @@ import model.CityEntity
 class GetCityHasMostSuitableFitnessClubInteractor(private val dataSource: CostOfLivingDataSource) {
 
     fun execute(limit: Int): List<Triple<String, Float, Float>> {
-        takeIf { limit > 0 } ?: throw Throwable("Limit is negative")
-        return dataSource
+
+        return takeIf { limit > 0 }?.let { dataSource
             .getAllCitiesData()
             .filter {
                 isCitiesInUnitedKingdomGermanyAndFrance(it)
@@ -24,8 +24,8 @@ class GetCityHasMostSuitableFitnessClubInteractor(private val dataSource: CostOf
                         servicesPrices.fitnessClubMonthlyFeeForOneAdult!!,
                         transportationsPrices.oneWayTicketLocalTransport!!
                     )
-                }
-            }
+                } }
+            } ?: throw Throwable("Limit is negative")
     }
 
     fun excludeLowQualityData(city: CityEntity): Boolean {
