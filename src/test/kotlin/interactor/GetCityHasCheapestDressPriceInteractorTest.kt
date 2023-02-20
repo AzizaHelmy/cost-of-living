@@ -18,77 +18,80 @@ class GetCityHasCheapestDressPriceTest {
     private lateinit var interactor: GetCityHasCheapestDressPriceInteractor
     private val mockData = mockk<CostOfLivingDataSource>()
 
-
     @BeforeAll
     fun setup() {
         unmockkAll()
         clearAllMocks()
         interactor = GetCityHasCheapestDressPriceInteractor(mockData)
     }
+
     @Test
     fun `should return both city name and dress price when country name is correct`() {
         // Given
-        val mockCity = listOf(MockCityEntity.createMockCity("Egypt","Cairo",true,100f)
-            ,MockCityEntity.createMockCity("Egypt","Giza",true,70f))
-        // When
+        val mockCity = listOf(
+            MockCityEntity.createMockCity("Egypt", "Cairo", true, 100f),
+            MockCityEntity.createMockCity("Egypt", "Giza", true, 70f)
+        )
         every { mockData.getAllCitiesData() } returns (mockCity)
+        // When
+        val actualResult = interactor.execute(2, "Egypt")
         // Then
-        val actualResult = interactor.execute(2,"Egypt")
-        assertEquals(listOf(Pair("Giza", 70f),Pair("Cairo", 100f)), actualResult)
+        assertEquals(listOf(Pair("Giza", 70f), Pair("Cairo", 100f)), actualResult)
     }
+
     @Test
     fun `should throws exception when country name is incorrect or empty`() {
         // Given
-        val mockCity = listOf(MockCityEntity.createMockCity("Eypy","Cairo",true,100f))
-        // When
+        val mockCity = listOf(MockCityEntity.createMockCity("Eypy", "Cairo", true, 100f))
         every { mockData.getAllCitiesData() } returns (mockCity)
+        // When
+        val actualResult = Executable { interactor.execute(1, "") }
         // Then
-        val actualResult = Executable { interactor.execute(1,"") }
         assertThrows(Exception::class.java, actualResult)
     }
 
     @Test
     fun `should return false when low data quality`() {
         // Given
-        val mockCity = listOf(MockCityEntity.createMockCity("Egypt","Cairo",false,100f))
-        // When
+        val mockCity = listOf(MockCityEntity.createMockCity("Egypt", "Cairo", false, 100f))
         every { mockData.getAllCitiesData() } returns (mockCity)
+        // When
+        val actualResult = interactor.excludeNullDressPriceAndCitiesOutCountryAndLowQualityData(mockCity[0], "Egypt")
         // Then
-        val actualResult = interactor.excludeNullDressPriceAndCitiesOutCountryAndLowQualityData(mockCity[0],"Egypt")
         assertFalse(actualResult)
     }
 
     @Test
-        fun `should return false when dress price is null`() {
-            // Given
-                val mockCity = listOf(MockCityEntity.createMockCity("Egypt","Giza",true,null))
-            // When
-            every { mockData.getAllCitiesData() } returns (mockCity)
-            //Then
-                val actualResult=interactor.excludeNullDressPriceAndCitiesOutCountryAndLowQualityData(mockCity[0],"Egypt")
-            assertFalse(actualResult)
-        }
-        @Test
-            fun `should return false when country name is incorrect or null`() {
-                // Given
-            val mockCity = listOf(MockCityEntity.createMockCity("Egypt","Giza",true,100f))
-                // When
-                every { mockData.getAllCitiesData() } returns (mockCity)
-               //Then
-            val actualResult=interactor.excludeNullDressPriceAndCitiesOutCountryAndLowQualityData(mockCity[0],"lab lab lab")
-                assertFalse(actualResult)
-            }
-            @Test
-                fun `should return true when all country name ,dress price is correct and quality data is high`() {
-                    // Given
-                        val mockCity = listOf(MockCityEntity.createMockCity("Egypt","Giza",true,100f))
-                    // When
-                    every { mockData.getAllCitiesData() } returns (mockCity)
-                    // Then
-                    val actualResult =  interactor.excludeNullDressPriceAndCitiesOutCountryAndLowQualityData(mockCity[0],"Egypt")
-                    assertTrue(actualResult)
-                }
+    fun `should return false when dress price is null`() {
+        // Given
+        val mockCity = listOf(MockCityEntity.createMockCity("Egypt", "Giza", true, null))
+        every { mockData.getAllCitiesData() } returns (mockCity)
+        // When
+        val actualResult = interactor.excludeNullDressPriceAndCitiesOutCountryAndLowQualityData(mockCity[0], "Egypt")
+        //Then
+        assertFalse(actualResult)
+    }
 
+    @Test
+    fun `should return false when country name is incorrect or null`() {
+        // Given
+        val mockCity = listOf(MockCityEntity.createMockCity("Egypt", "Giza", true, 100f))
+        every { mockData.getAllCitiesData() } returns (mockCity)
+        // When
+        val actualResult =
+            interactor.excludeNullDressPriceAndCitiesOutCountryAndLowQualityData(mockCity[0], "lab lab lab")
+        //Then
+        assertFalse(actualResult)
+    }
 
-
-            }
+    @Test
+    fun `should return true when all country name ,dress price is correct and quality data is high`() {
+        // Given
+        val mockCity = listOf(MockCityEntity.createMockCity("Egypt", "Giza", true, 100f))
+        every { mockData.getAllCitiesData() } returns (mockCity)
+        // When
+        val actualResult = interactor.excludeNullDressPriceAndCitiesOutCountryAndLowQualityData(mockCity[0], "Egypt")
+        // Then
+        assertTrue(actualResult)
+    }
+}
