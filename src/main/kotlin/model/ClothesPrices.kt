@@ -5,5 +5,5 @@ data class ClothesPrices(
     val oneSummerDressInAChainStoreZaraHAndM: Float?,
     val onePairOfNikeRunningShoesMidRange: Float?,
     val onePairOfMenLeatherBusinessShoes: Float?,
-) {
-}
+)
+
