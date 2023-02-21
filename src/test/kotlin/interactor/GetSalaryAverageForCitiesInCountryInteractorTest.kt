@@ -14,13 +14,11 @@ import org.junit.jupiter.api.function.Executable
 /**
  * Created by Mohamed Elgohary on 2/9/2023.
  */
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class GetSalaryAverageForCitiesInCountryInteractorTest {
 
     private lateinit var interactor: GetSalaryAverageForCitiesInCountryInteractor
     private val mockData = mockk<CostOfLivingDataSource>()
-
 
     @BeforeAll
     fun setup() {
@@ -28,7 +26,6 @@ internal class GetSalaryAverageForCitiesInCountryInteractorTest {
         clearAllMocks()
         interactor = GetSalaryAverageForCitiesInCountryInteractor(mockData)
     }
-
 
     @Test
     fun `should return cities name and salaries average when country name is uppercase`() {
@@ -59,15 +56,12 @@ internal class GetSalaryAverageForCitiesInCountryInteractorTest {
                 true
             )
         )
-
         every { mockData.getAllCitiesData() } returns (mockCity)
         // When averageSalary not null and high dataQuality
         val actualPairList = interactor.execute(mockCity[0].country)
-
         // Then return a list of pair of city name and average salary
         assertEquals(listOf(Pair("Tanta", 101.74f)), actualPairList)
     }
-
 
     @Test
     fun `should return cities name and salaries average when country name is mixed`() {
@@ -89,7 +83,6 @@ internal class GetSalaryAverageForCitiesInCountryInteractorTest {
         assertEquals(listOf(Pair("Damascus", 50.24f)), actualPairList)
     }
 
-
     @Test
     fun `should return exception when country name is empty or wrong`() {
         // Given empty country name
@@ -101,13 +94,10 @@ internal class GetSalaryAverageForCitiesInCountryInteractorTest {
                 true
             )
         )
-
         val exception = IllegalStateException(" Country name is empty or wrong :( Try again! ")
         every { mockData.getAllCitiesData() } throws (exception)
-
         // When country name is empty
         val result = Executable { interactor.execute(mockCity[0].country) }
-
         // Then return Throw Exception
         assertThrows(Exception::class.java, result)
     }
@@ -127,14 +117,12 @@ internal class GetSalaryAverageForCitiesInCountryInteractorTest {
 
         // When averageSalary not null and high dataQuality
         val actualResult = interactor.excludeNullSalariesAndLowQualityData(mockCity[0])
-
         // Then return false
         assertFalse(actualResult)
     }
 
     @Test
     fun `should return true when salaries not equal null and avoid low quality data`() {
-
         val mockCity = listOf(
             MockCityEntity.createMockCity(
                 "Country",
@@ -144,10 +132,8 @@ internal class GetSalaryAverageForCitiesInCountryInteractorTest {
             )
         )
         every { mockData.getAllCitiesData() } returns (mockCity)
-
         // When averageSalary not null and high dataQuality
         val actualResult = interactor.excludeNullSalariesAndLowQualityData(mockCity[0])
-
         // Then return false
         assertTrue(actualResult)
 
