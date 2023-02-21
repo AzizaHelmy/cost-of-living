@@ -54,7 +54,7 @@ class GetCityHasCheapestCappuccinoRegularInRestaurantsInteractorTest {
                 countryName = "french",
                 cityName = "Paris" ,
                 dataQuality = true
-            ) )  //(Paris, 3.89)
+            ) )
         every { dataSource.getAllCitiesData()} returns (mockCity)
         // When Cappuccino Regular price is not null and high dataQuality
         val actualResult = interactor.execute(mockCity[0].country)
@@ -72,7 +72,6 @@ class GetCityHasCheapestCappuccinoRegularInRestaurantsInteractorTest {
                 cityName = "Istanbul" ,
                 dataQuality = true
             ) )
-        //(Istanbul, 1.98)
         every { dataSource.getAllCitiesData() } returns (mockCity)
         // When Cappuccino Regular not null and high dataQuality
         val actualList = interactor.execute(mockCity[0].country)
