@@ -37,7 +37,7 @@ class GetCityHasCheapestCappuccinoRegularInRestaurantsInteractorTest {
                 countryName = "United States",
                 cityName = "Amarillo" ,
                 dataQuality = true
-            ) ) //(Amarillo, 3.34)
+            ) )
         every { dataSource.getAllCitiesData()} returns (mockCity)
         // When Cappuccino Regular price is not null and high dataQuality
         val result = interactor.execute(mockCity[0].country)
@@ -62,7 +62,6 @@ class GetCityHasCheapestCappuccinoRegularInRestaurantsInteractorTest {
         assertEquals(listOf(Pair("Paris", 3.89f)), actualResult)
     }
 
-
     @Test
     fun `should return name of city and cappuccino regular in restaurants when enter a mixed country name `() {
         // Given country name Mix of Uppercase and Lowercase
@@ -81,7 +80,6 @@ class GetCityHasCheapestCappuccinoRegularInRestaurantsInteractorTest {
         assertEquals(listOf(Pair("Istanbul", 1.98f)), actualList)
     }
 
-
     @Test
     fun `should return exception when enter an empty country name`() {
         // Given empty country name
@@ -99,7 +97,6 @@ class GetCityHasCheapestCappuccinoRegularInRestaurantsInteractorTest {
         // Then return Throw Exception
         assertThrows(Exception::class.java, result)
     }
-
 
     @Test
     fun `should return false when null cappuccino regular and low quality data`() {
