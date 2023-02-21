@@ -75,7 +75,7 @@ class GetCityHasAverageMealPricesInteractorTest {
     fun `should return false when the city has no averageMeal price and InexpensiveMeal`() {
         // given mealFor2PeopleMidRangeRestaurant , mealInexpensiveRestaurant is null
         val mealPrices = MealsPrices(null, null, 4.0F)
-        val mockCity = createMockCity(mealPrices)
+        val mockCity = createMockCity("Mexico", "Mexico",mealPrices)
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
         // when check if city has average meal
         val result = interactor.excludeNullMealPrices(mockCity)
@@ -87,7 +87,7 @@ class GetCityHasAverageMealPricesInteractorTest {
     fun `should return false when the city has no averageMeal price and Expensive`() {
         // given mealFor2PeopleMidRangeRestaurant , mealAtMcDonaldSOrEquivalent is null
         val mealPrices = MealsPrices(4.0F, null, null)
-        val mockCity = createMockCity(mealPrices)
+        val mockCity = createMockCity("Mexico", "Mexico",mealPrices)
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
         // when check if city has average meal
         val result = interactor.excludeNullMealPrices(mockCity)
@@ -99,7 +99,7 @@ class GetCityHasAverageMealPricesInteractorTest {
     fun `should return true when the city has AverageMeal`() {
         // given all mealPrices data
         val mealPrices = MealsPrices(2.0F, 6.0F, 6.0F)
-        val mockCity = createMockCity(mealPrices)
+        val mockCity = createMockCity("Mexico", "Mexico",mealPrices)
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
         // when check if city has average meal
         val result = interactor.excludeNullMealPrices(mockCity)
@@ -111,7 +111,7 @@ class GetCityHasAverageMealPricesInteractorTest {
     fun `should return true when the city has InexpensiveMeal and ExpensiveMeal`() {
         // given mealFor2PeopleMidRangeRestaurant is null
         val mealPrices = MealsPrices(6.0F, null, 2.0F)
-        val mockCity = createMockCity(mealPrices)
+        val mockCity = createMockCity("Mexico", "Mexico",mealPrices)
         every { mockData.getAllCitiesData() } returns listOf(mockCity)
         // when check if city has average meal
         val result = interactor.excludeNullMealPrices(mockCity)
