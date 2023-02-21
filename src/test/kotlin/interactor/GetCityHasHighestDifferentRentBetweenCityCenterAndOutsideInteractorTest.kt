@@ -133,5 +133,4 @@ internal class GetCityHasHighestDifferentRentBetweenCityCenterAndOutsideInteract
         assertThrows(Exception::class.java, city)
     }
 
-
 }
