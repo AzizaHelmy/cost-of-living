@@ -6,12 +6,13 @@ data class MealsPrices(
     val mealAtMcDonaldSOrEquivalent: Float?,
 ) {
     fun getAverageMealInCity(city: CityEntity): Float? {
-        return if (city.mealsPrices.mealFor2PeopleMidRangeRestaurant != null) {
-            city.mealsPrices.mealFor2PeopleMidRangeRestaurant / 2
-        } else if ((city.mealsPrices.mealInexpensiveRestaurant != null)
-            && (city.mealsPrices.mealAtMcDonaldSOrEquivalent != null)
-        )
-            ((city.mealsPrices.mealInexpensiveRestaurant) + (city.mealsPrices.mealAtMcDonaldSOrEquivalent)) / 2
-        else null
+        city.mealsPrices.run {
+            return if (mealFor2PeopleMidRangeRestaurant != null) {
+                mealFor2PeopleMidRangeRestaurant / 2
+            } else if ((mealInexpensiveRestaurant != null) && (mealAtMcDonaldSOrEquivalent != null))
+                ((mealInexpensiveRestaurant) + (mealAtMcDonaldSOrEquivalent)) / 2
+            else null
+        }
+
     }
 }
