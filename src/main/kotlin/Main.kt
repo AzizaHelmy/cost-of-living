@@ -93,7 +93,7 @@ fun main() {
     println(getCityWithCheapestInternationalPrimarySchoolForOneChild.execute(3))
     printSeparationLine()
     // endregion
-    //region 16 - GetCityHasCheapestBasicPricesInteractor
+    //region 16-GetCityHasCheapestBasicPricesInteractor
     val getCityHasCheapestBasicPricesInteractor = GetCityHasCheapestBasicPricesInteractor(dataSource)
     println(getCityHasCheapestBasicPricesInteractor.execute())
     printSeparationLine()

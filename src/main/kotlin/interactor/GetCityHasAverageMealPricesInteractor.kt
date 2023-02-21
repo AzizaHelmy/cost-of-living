@@ -25,7 +25,6 @@ class GetCityHasAverageMealPricesInteractor(
         )
     }
 
-
     fun excludeNullMealPrices(city: CityEntity): Boolean {
         return city.mealsPrices.run {
             (mealFor2PeopleMidRangeRestaurant != null) ||
@@ -45,8 +44,8 @@ class GetCityHasAverageMealPricesInteractor(
                     || (it.mealsPrices.getAverageMealInCity(it) == ceil(averageMealPricesInAllCities))
         }
     }
-
 }
+
 enum class ThreeSpecificCountries(val nameOFCountry: String) {
     USA("United States"),
     CANADA("Canada"),

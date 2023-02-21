@@ -5,7 +5,6 @@ import model.CityEntity
 class GetCityHasCheapestDressPriceInteractor(private val dataSource: CostOfLivingDataSource) {
 
     fun execute(limit: Int, countryName: String): List<Pair<String, Float>> {
-
         return dataSource
             .getAllCitiesData()
             .filter { city -> excludeNullDressPriceAndCitiesOutCountryAndLowQualityData(city, countryName) }
@@ -16,7 +15,6 @@ class GetCityHasCheapestDressPriceInteractor(private val dataSource: CostOfLivin
             } ?: throw Exception("No cities found in country $countryName")
 
     }
-
     fun excludeNullDressPriceAndCitiesOutCountryAndLowQualityData(city: CityEntity, countryName: String): Boolean {
         return city.run {
             clothesPrices.oneSummerDressInAChainStoreZaraHAndM != null

@@ -44,7 +44,7 @@ internal class GetCityHasCheapestBasicPricesInteractorTest {
 
     @Test
     fun `should return false when the city has null values`() {
-        // given for all values is null
+        // given all values is null
         val expected = false
         val listOfCityEntity = listOf(
             createMockCity(

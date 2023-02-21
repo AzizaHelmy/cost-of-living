@@ -10,7 +10,6 @@ class GetCityHasCheapestCappuccinoRegularInRestaurantsInteractor(
     private val dataSource: CostOfLivingDataSource
 ) {
     fun execute(countryName: String): List<Pair<String, Float>> {
-
         return dataSource
             .getAllCitiesData()
             .filter {

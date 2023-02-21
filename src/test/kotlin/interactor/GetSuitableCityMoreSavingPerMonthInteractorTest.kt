@@ -32,7 +32,7 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
 
     @Test
     fun `should return true when cities has an average monthly salary`() {
-        //Given
+        //Given cityEntity with high average salary
         val fakeCity = listOf(
             createMockCity(
                 FoodPrices(
@@ -48,16 +48,16 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
             )
         )
         every { mockData.getAllCitiesData() } returns (fakeCity)
-        //When
+        //When get the suitable city
         val actualResult =
             interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
-        //Then
+        //Then check if getting the suitable city
         assertTrue(actualResult)
     }
 
     @Test
     fun `should return false when cities has not an average monthly salary`() {
-        //Given
+        //Given cityEntity hasn't average salary
         val fakeCity = listOf(
             createMockCity(
                 foodPrices = FoodPrices(
@@ -73,16 +73,16 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
             )
         )
         every { mockData.getAllCitiesData() } returns (fakeCity)
-        //When
+        //When get the suitable city
         val actualResult =
             interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
-        //Then
+        //Then check if not getting the suitable city
         assertFalse(actualResult)
     }
 
     @Test
     fun `should return true when cities has an apartment 3Bedrooms in city center`() {
-        //Given
+        //Given cityEntity
         val fakeCity = listOf(
             createMockCity(
                 FoodPrices(
@@ -98,16 +98,16 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
             )
         )
         every { mockData.getAllCitiesData() } returns (fakeCity)
-        //When
+        //When get the suitable city
         val actualResult =
             interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
-        //Then
+        //Then check if getting the suitable city
         assertTrue(actualResult)
     }
 
     @Test
     fun `should return false when cities has not an apartment 3Bedrooms in city center`() {
-        //Given
+        //Given list of cityEntities
         val fakeCity = listOf(
             createMockCity(
                 foodPrices = FoodPrices(
@@ -123,7 +123,7 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
             )
         )
         every { mockData.getAllCitiesData() } returns (fakeCity)
-        //When
+        //When get the suitable city
         val actualResult =
             interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
         //Then
@@ -132,7 +132,7 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
 
     @Test
     fun `should return true when cities has the needed foodies`() {
-        //Given
+        //Given cityEntity
         val fakeCity = listOf(
             createMockCity(
                 FoodPrices(
@@ -148,7 +148,7 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
             )
         )
         every { mockData.getAllCitiesData() } returns (fakeCity)
-        //When
+        //When get the suitable city
         val actualResult =
             interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
         //Then
@@ -157,7 +157,7 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
 
     @Test
     fun `should return false when cities has not the needed foodies`() {
-        //Given
+        //Given cityEntity
         val fakeCity = listOf(
             createMockCity(
                 foodPrices = FoodPrices(
@@ -173,7 +173,7 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
             )
         )
         every { mockData.getAllCitiesData() } returns (fakeCity)
-        //When
+        //When get the suitable city
         val actualResult =
             interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
         //Then
@@ -182,7 +182,7 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
 
     @Test
     fun `should not return suitable city when no savings more per month`() {
-        //Given
+        //Given list of cityEntities
         val expectedResult = listOf(
             createMockCity(
                 foodPrices = FoodPrices(
@@ -210,15 +210,15 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
             )
         )
         every { mockData.getAllCitiesData() } returns (expectedResult)
-        //When
+        //When get the suitable city
         val actualResult = interactor.execute()
-        //Then
+        //Then check if not getting the suitable city
         assertNotEquals(expectedResult[0], actualResult)
     }
 
     @Test
     fun `should return suitable city when savings more per month`() {
-        //Given
+        //Given list of cityEntities
         val expectedResult = listOf(
             createMockCity(
                 FoodPrices(
@@ -234,9 +234,9 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
             )
         )
         every { mockData.getAllCitiesData() } returns (expectedResult)
-        //When
+        //When get the suitable city
         val actualResult = interactor.execute()
-        //Then
+        //Then check if getting the suitable city
         assertEquals(expectedResult[0], actualResult)
     }
 

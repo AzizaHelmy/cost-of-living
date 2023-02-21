@@ -21,7 +21,6 @@ class SearchCheapestCarInCountryInteractor(
                 .takeIf { it.isNotEmpty() } ?: throw Exception("No cities found in country $countryName")
         } ?: throw Exception("enter a positive limit :) ")
     }
-
     fun getNumberOfMonthsToBuyACar(city: CityEntity) =
         (searchCheapestCar(city) / city.averageMonthlyNetSalaryAfterTax!!)
 

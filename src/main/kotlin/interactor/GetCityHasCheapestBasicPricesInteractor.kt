@@ -5,7 +5,6 @@ import model.CityEntity
 class GetCityHasCheapestBasicPricesInteractor(
     private val dataSource: CostOfLivingDataSource
 ) {
-
     fun execute(): CityEntity? {
         return dataSource
             .getAllCitiesData()
