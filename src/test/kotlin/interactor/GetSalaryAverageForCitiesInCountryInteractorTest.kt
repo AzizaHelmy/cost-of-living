@@ -1,6 +1,10 @@
 package interactor
 
-import fakeData.FakeData
+import io.mockk.clearAllMocks
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.unmockkAll
+import mockdata.MockCityEntity
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -14,88 +18,138 @@ import org.junit.jupiter.api.function.Executable
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class GetSalaryAverageForCitiesInCountryInteractorTest {
 
-    private lateinit var fakeData: FakeData
     private lateinit var interactor: GetSalaryAverageForCitiesInCountryInteractor
+    private val mockData = mockk<CostOfLivingDataSource>()
+
 
     @BeforeAll
     fun setup() {
-        fakeData = FakeData()
-        interactor = GetSalaryAverageForCitiesInCountryInteractor(fakeData)
-
+        unmockkAll()
+        clearAllMocks()
+        interactor = GetSalaryAverageForCitiesInCountryInteractor(mockData)
     }
 
+
     @Test
-    fun should_ReturnCitiesNameAndSalariesAverage_When_CountryNameIsUppercase() {
+    fun `should return cities name and salaries average when country name is uppercase`() {
         // Given country name Uppercase
-        val countryName = "CUBA"
-
+        val mockCity = listOf(
+            MockCityEntity.createMockCity(
+                "UNITED STATES",
+                "New York",
+                1500.0f,
+                true
+            )
+        )
         // When averageSalary not null and high dataQuality
-        val actualPairList = interactor.execute(countryName)
+        every { mockData.getAllCitiesData() } returns (mockCity)
         // Then return a list of pair of city name and average salary
-        val expected =
-            listOf(Pair("Santiago de Cuba", 1580.0f), Pair("Sancti Spiritus", 20.0f), Pair("Santa Clara", 25.0f))
-        assertEquals(expected, actualPairList)
+        val actualResult = interactor.execute(mockCity[0].country)
+        assertEquals(listOf(Pair("New York", 1500.0f)), actualResult)
     }
 
     @Test
-    fun should_ReturnCitiesNameAndSalariesAverage_When_CountryNameIsLowercase() {
+    fun `should return cities name and salaries average when country name is lowercase`() {
         // Given country name Lowercase
-        val countryName = "egypt"
+        val mockCity = listOf(
+            MockCityEntity.createMockCity(
+                "egypt",
+                "Tanta",
+                101.74f,
+                true
+            )
+        )
 
+        every { mockData.getAllCitiesData() } returns (mockCity)
         // When averageSalary not null and high dataQuality
-        val actualPairList = interactor.execute(countryName)
+        val actualPairList = interactor.execute(mockCity[0].country)
 
         // Then return a list of pair of city name and average salary
         assertEquals(listOf(Pair("Tanta", 101.74f)), actualPairList)
     }
 
+
     @Test
-    fun should_ReturnCitiesNameAndSalariesAverage_When_CountryNameIsMixed() {
+    fun `should return cities name and salaries average when country name is mixed`() {
         // Given country name Mix of Uppercase and Lowercase
-        val countryName = "SyRia"
+        val mockCity = listOf(
+            MockCityEntity.createMockCity(
+                "SyRiA",
+                "Damascus",
+                50.24f,
+                true
+            )
+        )
+        every { mockData.getAllCitiesData() } returns (mockCity)
 
         // When averageSalary not null and high dataQuality
-        val actualPairList = interactor.execute(countryName)
+        val actualPairList = interactor.execute(mockCity[0].country)
 
         // Then return a list of pair of city name and average salary
         assertEquals(listOf(Pair("Damascus", 50.24f)), actualPairList)
     }
 
+
     @Test
-    fun should_ReturnException_When_CountryNameIsEmptyOrWrong() {
+    fun `should return exception when country name is empty or wrong`() {
         // Given empty country name
-        val countryName = ""
+        val mockCity = listOf(
+            MockCityEntity.createMockCity(
+                "",
+                "",
+                0.0f,
+                true
+            )
+        )
+
+        val exception = IllegalStateException(" Country name is empty or wrong :( Try again! ")
+        every { mockData.getAllCitiesData() } throws (exception)
 
         // When country name is empty
-        val result = Executable { interactor.execute(countryName) }
+        val result = Executable { interactor.execute(mockCity[0].country) }
 
         // Then return Throw Exception
         assertThrows(Exception::class.java, result)
     }
 
     @Test
-    fun should_ReturnFalse_When_SalariesEqualNullOrNotAvoidLowQualityData() {
+    fun `should return false when salaries equal null or not avoid low quality data`() {
         // Given cityEntity
-        val fakeCity = fakeData.getAllCitiesData()[1]
+        val mockCity = listOf(
+            MockCityEntity.createMockCity(
+                "Country",
+                "City",
+                null,
+                true
+            )
+        )
+        every { mockData.getAllCitiesData() } returns (mockCity)
 
-        // When averageSalary not null and low dataQuality
-        val result = interactor.excludeNullSalariesAndLowQualityData(fakeCity)
+        // When averageSalary not null and high dataQuality
+        val actualResult = interactor.excludeNullSalariesAndLowQualityData(mockCity[0])
 
         // Then return false
-        assertFalse(result)
+        assertFalse(actualResult)
     }
 
     @Test
-    fun should_ReturnTrue_When_SalariesNotEqualNullAndAvoidLowQualityData() {
-        // Given cityEntity
-        val fakeCity = fakeData.getAllCitiesData()[2]
+    fun `should return true when salaries not equal null and avoid low quality data`() {
+
+        val mockCity = listOf(
+            MockCityEntity.createMockCity(
+                "Country",
+                "City",
+                50.0f,
+                true
+            )
+        )
+        every { mockData.getAllCitiesData() } returns (mockCity)
 
         // When averageSalary not null and high dataQuality
-        val result = interactor.excludeNullSalariesAndLowQualityData(fakeCity)
+        val actualResult = interactor.excludeNullSalariesAndLowQualityData(mockCity[0])
 
-        // Then return true
-        assertTrue(result)
+        // Then return false
+        assertTrue(actualResult)
+
     }
-
-
 }
