@@ -14,7 +14,8 @@ import org.junit.jupiter.api.function.Executable
 import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class GetCityHasCheapestDressPriceTest {
+class GetCityHasCheapestDressPriceInteractorTest {
+
     private lateinit var interactor: GetCityHasCheapestDressPriceInteractor
     private val mockData = mockk<CostOfLivingDataSource>()
 
