@@ -30,10 +30,13 @@ internal class GetCityHasCheapestBasicPricesInteractorTest {
         val expected = false
         val listOfCityEntity = listOf(
             createMockCity(
-                "us", 6000.0F, null, null, 50.0F
+                "us",
+                6000.0F,
+                null,
+                null,
+                50.0F
             )
         )
-
         every { mockData.getAllCitiesData() } returns listOfCityEntity
         // when return the country of the city is Canada
         val result = interactor.excludeNullSalaryLowQualityDataAndOtherBasicPrices(listOfCityEntity[0])
@@ -48,7 +51,11 @@ internal class GetCityHasCheapestBasicPricesInteractorTest {
         val expected = false
         val listOfCityEntity = listOf(
             createMockCity(
-                "us", null, null, null, null
+                "us",
+                null,
+                null,
+                null,
+                null
             )
         )
         every { mockData.getAllCitiesData() } returns listOfCityEntity
@@ -56,7 +63,6 @@ internal class GetCityHasCheapestBasicPricesInteractorTest {
         val result = interactor.excludeNullSalaryLowQualityDataAndOtherBasicPrices(listOfCityEntity[0])
         // then
         assertEquals(expected, result)
-
     }
 
     @Test
@@ -65,8 +71,11 @@ internal class GetCityHasCheapestBasicPricesInteractorTest {
         val expected = true
         val listOfCityEntity = listOf(
             createMockCity(
-                "us", 2000.0F, 300.0F,
-                200.0F, 100.0F
+                "us",
+                2000.0F,
+                300.0F,
+                200.0F,
+                100.0F
             )
         )
         every { mockData.getAllCitiesData() } returns listOfCityEntity
@@ -74,17 +83,36 @@ internal class GetCityHasCheapestBasicPricesInteractorTest {
         val result = interactor.excludeNullSalaryLowQualityDataAndOtherBasicPrices(listOfCityEntity[0])
         // then
         assertEquals(expected, result)
-
     }
 
     @Test
     fun `should return city entity when cities list is not empty`() {
         // given list of cityEntity using mock
         val citiesData = listOf(
-            createMockCity("Switzerland", 5000.0F, 800.0F, 200.0F, 200.0F),
-            createMockCity("united state", 3500.0F, 500.0F, 100.0F, 200.0F),
-            createMockCity("london", 2000.0F, 500.0F, 100.0F, 200.0F),
-            createMockCity("canada", 1500.0F, 500.0F, 100.0F, 200.0F)
+            createMockCity(
+                "Switzerland",
+                5000.0F,
+                800.0F,
+                200.0F,
+                200.0F),
+            createMockCity(
+                "united state",
+                3500.0F,
+                500.0F,
+                100.0F,
+                200.0F),
+            createMockCity(
+                "london",
+                2000.0F,
+                500.0F,
+                100.0F,
+                200.0F),
+            createMockCity(
+                "canada",
+                1500.0F,
+                500.0F,
+                100.0F,
+                200.0F)
         )
         every { mockData.getAllCitiesData() } returns citiesData
         // when execute return a cityEntity
