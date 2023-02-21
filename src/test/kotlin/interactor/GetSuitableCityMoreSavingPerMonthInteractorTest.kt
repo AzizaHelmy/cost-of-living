@@ -49,8 +49,7 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
         )
         every { mockData.getAllCitiesData() } returns (fakeCity)
         //When get the suitable city
-        val actualResult =
-            interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
+        val actualResult = interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
         //Then check if getting the suitable city
         assertTrue(actualResult)
     }
@@ -74,8 +73,7 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
         )
         every { mockData.getAllCitiesData() } returns (fakeCity)
         //When get the suitable city
-        val actualResult =
-            interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
+        val actualResult = interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
         //Then check if not getting the suitable city
         assertFalse(actualResult)
     }
@@ -99,8 +97,7 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
         )
         every { mockData.getAllCitiesData() } returns (fakeCity)
         //When get the suitable city
-        val actualResult =
-            interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
+        val actualResult = interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
         //Then check if getting the suitable city
         assertTrue(actualResult)
     }
@@ -124,8 +121,7 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
         )
         every { mockData.getAllCitiesData() } returns (fakeCity)
         //When get the suitable city
-        val actualResult =
-            interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
+        val actualResult = interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
         //Then
         assertFalse(actualResult)
     }
@@ -149,8 +145,7 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
         )
         every { mockData.getAllCitiesData() } returns (fakeCity)
         //When get the suitable city
-        val actualResult =
-            interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
+        val actualResult = interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
         //Then
         assertTrue(actualResult)
     }
@@ -174,8 +169,7 @@ internal class GetSuitableCityMoreSavingPerMonthInteractorTest {
         )
         every { mockData.getAllCitiesData() } returns (fakeCity)
         //When get the suitable city
-        val actualResult =
-            interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
+        val actualResult = interactor.excludeNullSalariesApartment3BedroomsAndFoodies(fakeCity[0])
         //Then
         assertFalse(actualResult)
     }
